@@ -3,6 +3,7 @@ package presentacion;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.SystemColor;
@@ -13,33 +14,22 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.LineBorder;
+
+import interfaces.IVentanaPrincipal;
+
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class VentanaPPal {
+public class VentanaPPal implements IVentanaPrincipal {
 
 	private JFrame frame;
 	
 	private VentanaSimulacion ventanaSimulacion = new VentanaSimulacion();
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaPPal window = new VentanaPPal();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private VDialogNuevoArchivo ventanaDialogNArch = new VDialogNuevoArchivo();
+	
 
 	/**
 	 * Create the application.
@@ -157,4 +147,27 @@ public class VentanaPPal {
 		txtpnDescCalc.setBounds(129, 41, 537, 50);
 		panelCalc.add(txtpnDescCalc);
 	}
+
+	@Override
+    public void addActionListener(ActionListener actionListener) {
+        this.ventanaSimulacion.getBtnNuevo().addActionListener(actionListener);
+        this.ventanaSimulacion.getBtnSimular().addActionListener(actionListener);
+        this.ventanaDialogNArch.getBtnDialogOK().addActionListener(actionListener);
+    }
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public VentanaSimulacion getVentanaSimulacion() {
+		return ventanaSimulacion;
+	}
+
+	public VDialogNuevoArchivo getDialogNArch() {
+		return ventanaDialogNArch;
+	}
+	
+    public void lanzarCartelError(String err) {
+        JOptionPane.showMessageDialog(null, err);
+    }
 }

@@ -1,8 +1,13 @@
 package interfaces;
 
+import java.awt.event.ActionListener;
+
+import presentacion.VDialogNuevoArchivo;
+import presentacion.VentanaSimulacion;
+
 public interface IVentanaPrincipal {
-	void actualizarListaArchivos();
-	void cargarArchivo();
-	void hacerSimulacion();
-	void hacerCalculos();
+	void addActionListener(ActionListener actionListener);
+	VentanaSimulacion getVentanaSimulacion();
+	VDialogNuevoArchivo getDialogNArch();
+	void lanzarCartelError(String err);
 }

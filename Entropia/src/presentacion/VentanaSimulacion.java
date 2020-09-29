@@ -7,25 +7,46 @@ import java.awt.Color;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.JTextPane;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.Font;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import javax.swing.Action;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
+import javax.swing.ListSelectionModel;
+import javax.swing.AbstractListModel;
 
 public class VentanaSimulacion {
 
 	private JFrame frame;
-	private JTextField textFieldN;
-
+	private JTextField textFieldN = new JTextField();;
+	private JButton btnSimular = new JButton("SIMULAR\r\n");
+	private JButton btnNuevo = new JButton("Crear archivo");
+	private JTextArea textAreaDistribucionProb = new JTextArea();
+	private DefaultListModel<String> listaModeloArchivos = new DefaultListModel<String>();
+	private JList listArchivos = new JList();
+	
 	/**
 	 * Create the application.
 	 */
 	public VentanaSimulacion() {
 		initialize();
+		this.btnSimular.setActionCommand("SIMULAR");
+		this.btnNuevo.setActionCommand("CREAR ARCH");
 		
+		listArchivos.setModel(listaModeloArchivos);
+		listArchivos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listArchivos.setBounds(23, 123, 392, 91);
+		frame.getContentPane().add(listArchivos);
 		frame.getRootPane().setWindowDecorationStyle(JRootPane.NONE); 
 	}
 
@@ -62,11 +83,6 @@ public class VentanaSimulacion {
 		txtpnArchivosDeDatos.setBounds(23, 94, 203, 19);
 		frame.getContentPane().add(txtpnArchivosDeDatos);
 		
-		JTextArea textAreaArchivos = new JTextArea();
-		textAreaArchivos.setBackground(new Color(255, 255, 255));
-		textAreaArchivos.setBounds(23, 123, 404, 76);
-		frame.getContentPane().add(textAreaArchivos);
-		
 		JTextPane txtpnDistribucionDeProbabilidad = new JTextPane();
 		txtpnDistribucionDeProbabilidad.setText("Distribucion de probabilidad");
 		txtpnDistribucionDeProbabilidad.setForeground(Color.WHITE);
@@ -75,7 +91,7 @@ public class VentanaSimulacion {
 		txtpnDistribucionDeProbabilidad.setBounds(23, 226, 203, 19);
 		frame.getContentPane().add(txtpnDistribucionDeProbabilidad);
 		
-		JTextArea textAreaDistribucionProb = new JTextArea();
+		
 		textAreaDistribucionProb.setBackground(new Color(255, 255, 255));
 		textAreaDistribucionProb.setBounds(23, 255, 547, 156);
 		frame.getContentPane().add(textAreaDistribucionProb);
@@ -94,13 +110,13 @@ public class VentanaSimulacion {
 		frame.getContentPane().add(textFieldN);
 		textFieldN.setColumns(10);
 		
-		JButton btnSimular = new JButton("SIMULAR\r\n");
+		btnSimular.setActionCommand("SIMULAR");
 		btnSimular.setForeground(new Color(255, 0, 102));
 		btnSimular.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		btnSimular.setBounds(362, 481, 132, 30);
 		frame.getContentPane().add(btnSimular);
 		
-		JButton btnNuevo = new JButton("Crear archivo");
+		btnNuevo.setActionCommand("CREAR ARCH");
 		btnNuevo.setForeground(new Color(0, 0, 0));
 		btnNuevo.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		btnNuevo.setBounds(437, 125, 132, 30);
@@ -110,4 +126,49 @@ public class VentanaSimulacion {
 	public JFrame getFrame() {
 		return frame;
 	}
+	
+    public JButton getBtnSimular() {
+		return btnSimular;
+	}
+
+	public JButton getBtnNuevo() {
+		return btnNuevo;
+	}
+
+	public JTextField getTextFieldN() {
+		return textFieldN;
+	}
+
+	public JTextArea getTextAreaDistribucionProb() {
+		return textAreaDistribucionProb;
+	}
+	
+	public void refrescarLista(ArrayList<String> listaArch) {
+		this.getListaModeloArchivos().clear();
+		Iterator it = listaArch.iterator();
+		while(it.hasNext()) {
+			this.getListaModeloArchivos().addElement((String) it.next());
+		}
+		
+	}
+
+	public DefaultListModel getListaModeloArchivos() {
+		return listaModeloArchivos;
+	}
+
+	public void setListaModeloArchivos(DefaultListModel listaModeloArchivos) {
+		this.listaModeloArchivos = listaModeloArchivos;
+	}
+
+	public JList getListArchivos() {
+		return listArchivos;
+	}
+
+	public void setListArchivos(JList listArchivos) {
+		this.listArchivos = listArchivos;
+	}
+	
+	
+	
+	
 }
