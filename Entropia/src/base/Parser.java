@@ -1,5 +1,6 @@
 package base;
 
+import java.awt.FontFormatException;
 import java.util.HashMap;
 
 import interfaces.IParser;
@@ -13,7 +14,7 @@ public class Parser implements IParser{
 		super();
 	}
 	
-	public void parsearTexto(String texto) {
+	public void parsearTexto(String texto) throws NumberFormatException {
 		hashMapActual = new HashMap<String, Double>();
 		String[] lineas, tokens_act;
 		String linea_act;
@@ -22,6 +23,8 @@ public class Parser implements IParser{
 			linea_act = lineas[i];
 			tokens_act = linea_act.split(" ");
 			hashMapActual.put(tokens_act[0], Double.valueOf(tokens_act[1]));
+
+			
 		}
 		
 	}

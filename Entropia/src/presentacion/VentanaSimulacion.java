@@ -16,14 +16,23 @@ import javax.swing.JButton;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Scanner;
 
 import javax.swing.Action;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
 import javax.swing.AbstractListModel;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class VentanaSimulacion {
 
@@ -48,6 +57,17 @@ public class VentanaSimulacion {
 		listArchivos.setBounds(23, 123, 392, 91);
 		frame.getContentPane().add(listArchivos);
 		frame.getRootPane().setWindowDecorationStyle(JRootPane.NONE); 
+		
+		listArchivos.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if(!listArchivos.isSelectionEmpty())
+				{
+					mostrarArchivo();
+				}
+			}
+		});
+	
 	}
 
 	/**
@@ -168,6 +188,34 @@ public class VentanaSimulacion {
 		this.listArchivos = listArchivos;
 	}
 	
+	public String getNombreSeleccionado()
+	{
+		return (String) this.listArchivos.getSelectedValue().toString();
+	}
+	
+	//Delegar al controlador?
+	public void mostrarArchivo()
+	{
+		String ruta = ".\\datos\\"+getNombreSeleccionado();
+		File file = new File(ruta.trim());
+		try {
+			if(file.exists())
+			{
+				Scanner scanner = new Scanner(file);
+				textAreaDistribucionProb.setText(null);
+				while(scanner.hasNext())
+				{
+					this.textAreaDistribucionProb.append(scanner.nextLine()+"\n");
+				}
+				scanner.close();
+			}
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	
 	
 	

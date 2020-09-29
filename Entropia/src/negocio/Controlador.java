@@ -2,9 +2,13 @@ package negocio;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 
 import base.Calculador;
 import base.Parser;
+import excepciones.CantidadIncorrectaException;
+import excepciones.SumaIncorrectaException;
+import excepciones.ValorIncorrectoException;
 import interfaces.IVentanaPrincipal;
 
 public class Controlador implements ActionListener{
@@ -21,11 +25,44 @@ public class Controlador implements ActionListener{
 
 
     public void realizarSimulacion() {
-    	Parser.get_instancia().parsearTexto(this.vista.getVentanaSimulacion().getTextAreaDistribucionProb().getText());
-        this.calculador.hacerSimulacion((String) this.vista.getVentanaSimulacion().getListArchivos().getSelectedValue(),
-        								Parser.get_instancia().getHashMapActual(),
-        								Integer.valueOf(this.vista.getVentanaSimulacion().getTextFieldN().getText()));
-        this.vista.lanzarCartelError("Simulacion realizada exitosamente!");
+    	if(this.vista.getVentanaSimulacion().getListArchivos().isSelectionEmpty())
+		{
+			this.vista.lanzarCartelError("Primero seleccione un archivo");
+			return; //No se si esta bien hacer return directamente
+		}
+    	try {
+			Parser.get_instancia().parsearTexto(this.vista.getVentanaSimulacion().getTextAreaDistribucionProb().getText());
+		} catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+			this.vista.lanzarCartelError("Error de formato de texto");
+			return; 
+		}
+        try {
+        	if(!this.vista.getVentanaSimulacion().getTextFieldN().getText().equals(""))
+        	{
+        		this.calculador.hacerSimulacion((String) this.vista.getVentanaSimulacion().getListArchivos().getSelectedValue(),
+						Parser.get_instancia().getHashMapActual(),
+						Integer.valueOf(this.vista.getVentanaSimulacion().getTextFieldN().getText()));
+        		
+						//TODO Guardar el Hashmap de alguna forma
+        		
+						this.vista.lanzarCartelError("Simulacion realizada exitosamente!");
+						//Actualizar archivo
+						calculador.actualizarArchivo(this.vista.getVentanaSimulacion().getNombreSeleccionado(),
+						this.vista.getVentanaSimulacion().getTextAreaDistribucionProb().getText());
+			}
+        	else {
+        		this.vista.lanzarCartelError("Ingrese una cantidad de simbolos");
+			}
+			
+		} catch (CantidadIncorrectaException e) {
+			this.vista.lanzarCartelError("Cantidad de simbolos incorrecta");
+		} catch (SumaIncorrectaException e) {
+			this.vista.lanzarCartelError("La suma de las probabilidades no es 1");
+		}
+        catch (ValorIncorrectoException e) {
+			this.vista.lanzarCartelError("Los valores de probalidades son incorrectos");
+		} 
+        
     }
     
 	@Override
@@ -45,4 +82,5 @@ public class Controlador implements ActionListener{
 	    }
         
     }
+	
 }
