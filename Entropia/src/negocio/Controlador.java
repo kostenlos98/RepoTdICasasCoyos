@@ -3,6 +3,7 @@ package negocio;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.io.FileNotFoundException;
 
 import base.Calculador;
 import base.Parser;
@@ -21,14 +22,34 @@ public class Controlador implements ActionListener{
 		this.vista = vista;
 		this.vista.addActionListener(this); //aca ya se agregan los action listener de todas las ventanas
 		this.vista.getVentanaSimulacion().refrescarLista(calculador.listarArchivos());
+		this.vista.getVentanaCalculos().refrescarLista(calculador.listarArchivos());
 	}
 
-
+    public void realizarCalculos() {
+    	//hacer verificacion por formato?
+    	
+    	if(this.vista.getVentanaCalculos().getListArchivos().isSelectionEmpty())
+		{
+			this.vista.lanzarCartelError("Primero seleccione un archivo!");
+			return; 
+		}
+    	else {
+        	try {
+    			this.calculador.hacerCalculos((String) this.vista.getVentanaCalculos().getNombreSeleccionado());
+    		} catch (FileNotFoundException e) {
+    			e.printStackTrace();
+    			this.vista.lanzarCartelError("Error al hacer los calculos");
+    		}
+        	this.vista.getVentanaCalculos().getTextAreaCantInfo().setText("Cantidad de info");
+        	this.vista.getVentanaCalculos().getTextFieldEntropia().setText(String.valueOf(this.calculador.getEntropiaAct()));
+    	}
+    }
+    
     public void realizarSimulacion() {
     	if(this.vista.getVentanaSimulacion().getListArchivos().isSelectionEmpty())
 		{
 			this.vista.lanzarCartelError("Primero seleccione un archivo");
-			return; //No se si esta bien hacer return directamente
+			return; 
 		}
     	try {
 			Parser.get_instancia().parsearTexto(this.vista.getVentanaSimulacion().getTextAreaDistribucionProb().getText());
@@ -39,16 +60,11 @@ public class Controlador implements ActionListener{
         try {
         	if(!this.vista.getVentanaSimulacion().getTextFieldN().getText().equals(""))
         	{
-        		this.calculador.hacerSimulacion((String) this.vista.getVentanaSimulacion().getListArchivos().getSelectedValue(),
+        		this.calculador.hacerSimulacion((String) this.vista.getVentanaSimulacion().getNombreSeleccionado(),
 						Parser.get_instancia().getHashMapActual(),
 						Integer.valueOf(this.vista.getVentanaSimulacion().getTextFieldN().getText()));
         		
-						//TODO Guardar el Hashmap de alguna forma
-        		
 						this.vista.lanzarCartelError("Simulacion realizada exitosamente!");
-						//Actualizar archivo
-						calculador.actualizarArchivo(this.vista.getVentanaSimulacion().getNombreSeleccionado(),
-						this.vista.getVentanaSimulacion().getTextAreaDistribucionProb().getText());
 			}
         	else {
         		this.vista.lanzarCartelError("Ingrese una cantidad de simbolos");
@@ -79,7 +95,11 @@ public class Controlador implements ActionListener{
 	        this.calculador.nuevoArchivo(this.vista.getDialogNArch().getTfNombreNArch().getText());
 	        this.vista.getDialogNArch().setVisible(false);
 	        this.vista.getVentanaSimulacion().refrescarLista(calculador.listarArchivos());
-	    }
+	        this.vista.getVentanaCalculos().refrescarLista(calculador.listarArchivos());
+	    }else
+    	if(comando.equalsIgnoreCase("CALCULAR")){
+        	realizarCalculos();
+        }
         
     }
 	

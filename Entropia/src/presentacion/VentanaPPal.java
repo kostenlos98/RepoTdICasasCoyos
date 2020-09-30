@@ -28,6 +28,7 @@ public class VentanaPPal implements IVentanaPrincipal {
 	private JFrame frame;
 	
 	private VentanaSimulacion ventanaSimulacion = new VentanaSimulacion();
+	private VentanaCalculos ventanaCalculos = new VentanaCalculos();
 	private VDialogNuevoArchivo ventanaDialogNArch = new VDialogNuevoArchivo();
 	
 
@@ -117,6 +118,12 @@ public class VentanaPPal implements IVentanaPrincipal {
 		panelSimulacion.add(txtpnDescSim);
 		
 		JPanel panelCalc = new JPanel();
+		panelCalc.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				ventanaCalculos.getFrame().setVisible(true);
+			}
+		});
 		panelCalc.setBackground(Color.DARK_GRAY);
 		panelCalc.setLayout(null);
 		panelCalc.setBounds(10, 229, 666, 122);
@@ -152,6 +159,7 @@ public class VentanaPPal implements IVentanaPrincipal {
     public void addActionListener(ActionListener actionListener) {
         this.ventanaSimulacion.getBtnNuevo().addActionListener(actionListener);
         this.ventanaSimulacion.getBtnSimular().addActionListener(actionListener);
+        this.ventanaCalculos.getBtnCalcular().addActionListener(actionListener);
         this.ventanaDialogNArch.getBtnDialogOK().addActionListener(actionListener);
     }
 
@@ -162,7 +170,11 @@ public class VentanaPPal implements IVentanaPrincipal {
 	public VentanaSimulacion getVentanaSimulacion() {
 		return ventanaSimulacion;
 	}
-
+	
+	public VentanaCalculos getVentanaCalculos() {
+		return ventanaCalculos;
+	}
+	
 	public VDialogNuevoArchivo getDialogNArch() {
 		return ventanaDialogNArch;
 	}

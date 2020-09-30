@@ -3,6 +3,7 @@ package interfaces;
 import java.awt.event.ActionListener;
 
 import presentacion.VDialogNuevoArchivo;
+import presentacion.VentanaCalculos;
 import presentacion.VentanaSimulacion;
 
 public interface IVentanaPrincipal {
@@ -10,4 +11,5 @@ public interface IVentanaPrincipal {
 	VentanaSimulacion getVentanaSimulacion();
 	VDialogNuevoArchivo getDialogNArch();
 	void lanzarCartelError(String err);
+	VentanaCalculos getVentanaCalculos();
 }

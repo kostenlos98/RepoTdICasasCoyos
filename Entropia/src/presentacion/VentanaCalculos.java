@@ -34,28 +34,38 @@ import javax.swing.event.ListSelectionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class VentanaSimulacion {
+public class VentanaCalculos {
 
 	private JFrame frame;
-	private JTextField textFieldN = new JTextField();;
-	private JButton btnSimular = new JButton("SIMULAR\r\n");
-	private JButton btnNuevo = new JButton("Crear archivo");
-	private JTextArea textAreaDistribucionProb = new JTextArea();
+	private JTextField textFieldEntropia = new JTextField();
+	private JTextArea textAreaCantInfo = new JTextArea();
+	private JButton btnCalcular = new JButton("CALCULAR");
 	private DefaultListModel<String> listaModeloArchivos = new DefaultListModel<String>();
 	private JList listArchivos = new JList();
 	
 	/**
 	 * Create the application.
 	 */
-	public VentanaSimulacion() {
+	public VentanaCalculos() {
 		initialize();
-		this.btnSimular.setActionCommand("SIMULAR");
-		this.btnNuevo.setActionCommand("CREAR ARCH");
+		this.btnCalcular.setActionCommand("CALCULAR");
 		
 		listArchivos.setModel(listaModeloArchivos);
 		listArchivos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		listArchivos.setBounds(23, 123, 392, 91);
+		listArchivos.setBounds(23, 123, 240, 91);
 		frame.getContentPane().add(listArchivos);
+		
+		JTextPane txtpnCantTitle = new JTextPane();
+		txtpnCantTitle.setText("Cantidad de informacion");
+		txtpnCantTitle.setForeground(Color.WHITE);
+		txtpnCantTitle.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtpnCantTitle.setBackground(Color.BLACK);
+		txtpnCantTitle.setBounds(236, 294, 203, 19);
+		frame.getContentPane().add(txtpnCantTitle);
+		textAreaCantInfo.setEditable(false);
+		
+		textAreaCantInfo.setBounds(237, 334, 203, 143);
+		frame.getContentPane().add(textAreaCantInfo);
 		frame.getRootPane().setWindowDecorationStyle(JRootPane.NONE); 
 		
 	}
@@ -67,12 +77,12 @@ public class VentanaSimulacion {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.BLACK);
 		frame.setBackground(Color.BLACK);
-		frame.setBounds(100, 100, 598, 585);
+		frame.setBounds(100, 100, 496, 524);
 		frame.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.BLUE);
-		panel.setBounds(0, 10, 580, 59);
+		panel.setBounds(0, 10, 482, 59);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -81,7 +91,7 @@ public class VentanaSimulacion {
 		txtpnTitulo.setBackground(Color.BLUE);
 		txtpnTitulo.setEditable(false);
 		txtpnTitulo.setFont(new Font("Nirmala UI", Font.BOLD, 18));
-		txtpnTitulo.setText("SIMULACION");
+		txtpnTitulo.setText("CALCULOS");
 		txtpnTitulo.setBounds(10, 10, 132, 39);
 		panel.add(txtpnTitulo);
 		
@@ -93,66 +103,36 @@ public class VentanaSimulacion {
 		txtpnArchivosDeDatos.setBounds(23, 94, 203, 19);
 		frame.getContentPane().add(txtpnArchivosDeDatos);
 		
-		JTextPane txtpnDistribucionDeProbabilidad = new JTextPane();
-		txtpnDistribucionDeProbabilidad.setText("Distribucion de probabilidad");
-		txtpnDistribucionDeProbabilidad.setForeground(Color.WHITE);
-		txtpnDistribucionDeProbabilidad.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		txtpnDistribucionDeProbabilidad.setBackground(Color.BLACK);
-		txtpnDistribucionDeProbabilidad.setBounds(23, 226, 203, 19);
-		frame.getContentPane().add(txtpnDistribucionDeProbabilidad);
+		JTextPane txtpnResultadosTitle = new JTextPane();
+		txtpnResultadosTitle.setText("Resultados:");
+		txtpnResultadosTitle.setForeground(Color.WHITE);
+		txtpnResultadosTitle.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtpnResultadosTitle.setBackground(Color.BLACK);
+		txtpnResultadosTitle.setBounds(23, 252, 203, 19);
+		frame.getContentPane().add(txtpnResultadosTitle);
 		
+		JTextPane txtpnEntTitle = new JTextPane();
+		txtpnEntTitle.setText("Entropia");
+		txtpnEntTitle.setForeground(Color.WHITE);
+		txtpnEntTitle.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtpnEntTitle.setBackground(Color.BLACK);
+		txtpnEntTitle.setBounds(23, 294, 203, 19);
+		frame.getContentPane().add(txtpnEntTitle);
+		textFieldEntropia.setEditable(false);
 		
-		textAreaDistribucionProb.setBackground(new Color(255, 255, 255));
-		textAreaDistribucionProb.setBounds(23, 255, 547, 156);
-		frame.getContentPane().add(textAreaDistribucionProb);
+		textFieldEntropia.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		textFieldEntropia.setBounds(23, 334, 96, 30);
+		frame.getContentPane().add(textFieldEntropia);
+		textFieldEntropia.setColumns(10);
 		
-		JTextPane txtpnNcantidadDe = new JTextPane();
-		txtpnNcantidadDe.setText("N (cantidad de simbolos)");
-		txtpnNcantidadDe.setForeground(Color.WHITE);
-		txtpnNcantidadDe.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		txtpnNcantidadDe.setBackground(Color.BLACK);
-		txtpnNcantidadDe.setBounds(23, 454, 203, 19);
-		frame.getContentPane().add(txtpnNcantidadDe);
-		
-		textFieldN = new JTextField();
-		textFieldN.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		textFieldN.setBounds(23, 483, 96, 30);
-		frame.getContentPane().add(textFieldN);
-		textFieldN.setColumns(10);
-		
-		btnSimular.setActionCommand("SIMULAR");
-		btnSimular.setForeground(new Color(255, 0, 102));
-		btnSimular.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		btnSimular.setBounds(362, 481, 132, 30);
-		frame.getContentPane().add(btnSimular);
-		
-		btnNuevo.setActionCommand("CREAR ARCH");
-		btnNuevo.setForeground(new Color(0, 0, 0));
-		btnNuevo.setFont(new Font("Segoe UI", Font.BOLD, 13));
-		btnNuevo.setBounds(437, 125, 132, 30);
-		frame.getContentPane().add(btnNuevo);
+		btnCalcular.setActionCommand("CALCULAR");
+		btnCalcular.setForeground(new Color(255, 0, 102));
+		btnCalcular.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		btnCalcular.setBounds(309, 149, 132, 30);
+		frame.getContentPane().add(btnCalcular);
 	}
 
-	public JFrame getFrame() {
-		return frame;
-	}
-	
-    public JButton getBtnSimular() {
-		return btnSimular;
-	}
 
-	public JButton getBtnNuevo() {
-		return btnNuevo;
-	}
-
-	public JTextField getTextFieldN() {
-		return textFieldN;
-	}
-
-	public JTextArea getTextAreaDistribucionProb() {
-		return textAreaDistribucionProb;
-	}
-	
 	public void refrescarLista(ArrayList<String> listaArch) {
 		this.getListaModeloArchivos().clear();
 		Iterator it = listaArch.iterator();
@@ -182,5 +162,22 @@ public class VentanaSimulacion {
 	{
 		return (String) this.listArchivos.getSelectedValue().toString();
 	}
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public JTextField getTextFieldEntropia() {
+		return textFieldEntropia;
+	}
+
+	public JTextArea getTextAreaCantInfo() {
+		return textAreaCantInfo;
+	}
+
+	public JButton getBtnCalcular() {
+		return btnCalcular;
+	}
+	
 	
 }
