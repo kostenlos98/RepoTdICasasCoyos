@@ -5,14 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
-
-import com.sun.jmx.snmp.Enumerated;
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
 import excepciones.CantidadIncorrectaException;
 import excepciones.SumaIncorrectaException;
@@ -50,30 +43,22 @@ public class Calculador implements ICalculador {
 		return entropia;
 	}
 	
-	public void hacerSimulacion(String rutaArch, ArrayList<Estado> estados, int N) throws CantidadIncorrectaException
+	public void hacerSimulacion(String rutaArch, HashMap<String, Double> probs, int N) throws CantidadIncorrectaException
 	,SumaIncorrectaException,ValorIncorrectoException{
 		
-		if(N<0)
+		if(probs.size()!=N)
 			throw new CantidadIncorrectaException();
 		double suma=0;
-		Iterator<Estado> iterator = estados.iterator();
-		while(iterator.hasNext())
+		for(String i: probs.keySet())
 		{
-			double prob = iterator.next().getProb();
+			double prob = probs.get(i);
 			if(prob < 0 || prob > 1)
 				throw new ValorIncorrectoException();
 			suma+=prob;
 		}
 		if(suma!=1)
 			throw new SumaIncorrectaException();
-		//Termina la verificacion
-		bubbleSort(estados);
-		ArrayList<Estado> FDA = generarFDA(estados);
-		iterator = FDA.iterator();
-		for(int i=0;i<N;i++)
-		{
-			System.out.println(generarSimbolo(FDA));
-		}
+		
 	}
 	
 	public void nuevoArchivo(String nombre) {
@@ -119,51 +104,6 @@ public class Calculador implements ICalculador {
 		}
 		return listaArch;
 	}
-
-	static void bubbleSort(ArrayList<Estado> estados) {  
-        double n = estados.size();  
-        Estado temp;  
-         for(int i=0; i < n; i++){  
-                 for(int j=1; j < (n-i); j++){  
-                          if(estados.get(j-1).getProb() > estados.get(j).getProb()){  
-                                 temp = estados.get(j-1);  
-                                 estados.set(j-1,estados.get(j));  
-                                 estados.set(j,temp);
-                         }  
-                          
-                 }  
-         } 
-	}
 	
-	
-	
-	public ArrayList<Estado> generarFDA(ArrayList<Estado> estados)
-	{
-		ArrayList<Estado> FDA = new ArrayList<Estado>();
-		Iterator<Estado> iterator = estados.iterator();
-		double suma = 0;
-		while(iterator.hasNext())
-		{
-			Estado estado = iterator.next();
-			FDA.add(new Estado(estado.getSimbolo(),estado.getProb()+suma));
-			suma+=estado.getProb(); 
-			
-		}
-		return FDA;
-		
-	}
-	
-	public String generarSimbolo(ArrayList<Estado> FDA)
-	{
-		double random = Math.random();
-		Iterator<Estado> iterator = FDA.iterator();
-		Estado estado = iterator.next();
-		while(random>estado.getProb())
-		{
-			estado = iterator.next();
-		}
-		return estado.getSimbolo();
-	}
-	 
 	
 }
