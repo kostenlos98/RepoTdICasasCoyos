@@ -1,13 +1,17 @@
 package base;
 
 import java.awt.FontFormatException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import base.Estado;
 
 import interfaces.IParser;
 
 public class Parser implements IParser{
 	
 	private HashMap<String, Double> hashMapActual;
+	private ArrayList<Estado> estados;
 	private static Parser _instancia;
 	
 	private Parser() {
@@ -16,6 +20,7 @@ public class Parser implements IParser{
 	
 	public void parsearTexto(String texto) throws NumberFormatException {
 		hashMapActual = new HashMap<String, Double>();
+		estados = new ArrayList<Estado>();
 		String[] lineas, tokens_act;
 		String linea_act;
 		lineas = texto.split("\n");
@@ -23,8 +28,7 @@ public class Parser implements IParser{
 			linea_act = lineas[i];
 			tokens_act = linea_act.split(" ");
 			hashMapActual.put(tokens_act[0], Double.valueOf(tokens_act[1]));
-
-			
+			estados.add(new Estado(tokens_act[0],Double.valueOf(tokens_act[1])));
 		}
 		
 	}
@@ -42,6 +46,11 @@ public class Parser implements IParser{
 			_instancia = new Parser();
 		return _instancia;
 	}
+
+	public ArrayList<Estado> getEstados() {
+		return estados;
+	}
+	
 	
 	
 	

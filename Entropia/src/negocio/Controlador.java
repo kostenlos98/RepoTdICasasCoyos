@@ -40,7 +40,7 @@ public class Controlador implements ActionListener{
         	if(!this.vista.getVentanaSimulacion().getTextFieldN().getText().equals(""))
         	{
         		this.calculador.hacerSimulacion((String) this.vista.getVentanaSimulacion().getListArchivos().getSelectedValue(),
-						Parser.get_instancia().getHashMapActual(),
+						Parser.get_instancia().getEstados(),
 						Integer.valueOf(this.vista.getVentanaSimulacion().getTextFieldN().getText()));
         		
 						//TODO Guardar el Hashmap de alguna forma
