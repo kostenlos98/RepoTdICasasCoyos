@@ -121,7 +121,7 @@ public class VentanaCalculos {
 		textFieldEntropia.setEditable(false);
 		
 		textFieldEntropia.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		textFieldEntropia.setBounds(23, 334, 96, 30);
+		textFieldEntropia.setBounds(23, 334, 155, 30);
 		frame.getContentPane().add(textFieldEntropia);
 		textFieldEntropia.setColumns(10);
 		

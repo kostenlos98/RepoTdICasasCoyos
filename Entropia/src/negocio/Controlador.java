@@ -2,8 +2,8 @@ package negocio;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
+import java.util.Map.Entry;
 
 import base.Calculador;
 import base.Parser;
@@ -27,7 +27,7 @@ public class Controlador implements ActionListener{
 
     public void realizarCalculos() {
     	//hacer verificacion por formato?
-    	
+    	this.vista.getVentanaCalculos().getTextAreaCantInfo().setText("");
     	if(this.vista.getVentanaCalculos().getListArchivos().isSelectionEmpty())
 		{
 			this.vista.lanzarCartelError("Primero seleccione un archivo!");
@@ -40,7 +40,9 @@ public class Controlador implements ActionListener{
     			e.printStackTrace();
     			this.vista.lanzarCartelError("Error al hacer los calculos");
     		}
-        	this.vista.getVentanaCalculos().getTextAreaCantInfo().setText("Cantidad de info");
+        	for (Entry<String, Double> estado:this.calculador.getCantInfoAct().entrySet())
+        		this.vista.getVentanaCalculos().getTextAreaCantInfo().append("P("+estado.getKey()+") = "+estado.getValue()+"\n");
+        		
         	this.vista.getVentanaCalculos().getTextFieldEntropia().setText(String.valueOf(this.calculador.getEntropiaAct()));
     	}
     }
@@ -70,7 +72,7 @@ public class Controlador implements ActionListener{
         		this.vista.lanzarCartelError("Ingrese una cantidad de simbolos");
 			}
 			
-		} catch (CantidadIncorrectaException e) {
+		} catch (CantidadIncorrectaException  | NumberFormatException e) {
 			this.vista.lanzarCartelError("Cantidad de simbolos incorrecta");
 		} catch (SumaIncorrectaException e) {
 			this.vista.lanzarCartelError("La suma de las probabilidades no es 1");

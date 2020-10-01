@@ -1,6 +1,5 @@
 package base;
 
-import java.awt.FontFormatException;
 import java.util.HashMap;
 
 import interfaces.IParser;

@@ -1,6 +1,5 @@
 package base;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -30,10 +29,11 @@ public class Calculador implements ICalculador {
 	}
 	
 	public void hacerCalculos(String nombreArch) throws FileNotFoundException {
-        Scanner input = new Scanner(new File(".\\datos\\" + nombreArch));
+        Scanner input = new Scanner(new File(".\\datos\\" + nombreArch.trim()));
         probsAct= new HashMap<String, Double>();
         cantInfoAct = new HashMap<String, Double>();
         int cantidadTotalSimbolos = 0;
+        entropiaAct=0;
         HashMap<String,Integer> hashmapCants = new HashMap<String,Integer>();
         if(input.hasNextLine()) {
         	String line = input.nextLine();
@@ -86,6 +86,7 @@ public class Calculador implements ICalculador {
 		//armo las estructuras necesarias
 		String[] claves = probs.keySet().toArray(new String[0]);
 		Double[] valores = probs.values().toArray(new Double[0]);
+		
 		for(int i=1; i< valores.length; i++) {
 			valores[i] = valores[i]+valores[(i-1)]; 
 		}
@@ -102,7 +103,7 @@ public class Calculador implements ICalculador {
 	
 	public String establecerSimbolo(String[] claves, Double[] valores, double randActual) {
 		int i = 0;
-		while((i< valores.length) && (randActual < valores[i])) {
+		while((i< valores.length) && (randActual > valores[i])) {
 			i++;
 		}
 		if(i ==  valores.length)
