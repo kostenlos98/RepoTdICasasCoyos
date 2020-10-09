@@ -4,6 +4,7 @@ import java.awt.event.ActionListener;
 
 import presentacion.VDialogNuevoArchivo;
 import presentacion.VentanaCalculos;
+import presentacion.VentanaMarkov;
 import presentacion.VentanaSimulacion;
 
 public interface IVentanaPrincipal {
@@ -12,4 +13,5 @@ public interface IVentanaPrincipal {
 	VDialogNuevoArchivo getDialogNArch();
 	void lanzarCartelError(String err);
 	VentanaCalculos getVentanaCalculos();
+	VentanaMarkov getVentanaMarkov();
 }

@@ -30,7 +30,7 @@ public class VentanaPPal implements IVentanaPrincipal {
 	private VentanaSimulacion ventanaSimulacion = new VentanaSimulacion();
 	private VentanaCalculos ventanaCalculos = new VentanaCalculos();
 	private VDialogNuevoArchivo ventanaDialogNArch = new VDialogNuevoArchivo();
-	
+	private VentanaMarkov ventanaMarkov = new VentanaMarkov();
 
 	/**
 	 * Create the application.
@@ -88,12 +88,12 @@ public class VentanaPPal implements IVentanaPrincipal {
 			}
 		});
 		panelSimulacion.setBackground(Color.DARK_GRAY);
-		panelSimulacion.setBounds(10, 70, 666, 122);
+		panelSimulacion.setBounds(10, 70, 666, 102);
 		panel_2.add(panelSimulacion);
 		panelSimulacion.setLayout(null);
 		
 		JPanel panel_4 = new JPanel();
-		panel_4.setBounds(0, 10, 119, 102);
+		panel_4.setBounds(0, 10, 119, 71);
 		panelSimulacion.add(panel_4);
 		panel_4.setBorder(new LineBorder(UIManager.getColor("MenuItem.selectionBackground"), 4));
 		panel_4.setBackground(UIManager.getColor("MenuItem.disabledForeground"));
@@ -105,7 +105,7 @@ public class VentanaPPal implements IVentanaPrincipal {
 		txtpnSimulacion.setBackground(UIManager.getColor("MenuItem.disabledForeground"));
 		txtpnSimulacion.setFont(new Font("Tahoma", Font.BOLD, 14));
 		txtpnSimulacion.setText("SIMULACION");
-		txtpnSimulacion.setBounds(10, 36, 99, 26);
+		txtpnSimulacion.setBounds(10, 22, 99, 26);
 		panel_4.add(txtpnSimulacion);
 		
 		JTextPane txtpnDescSim = new JTextPane();
@@ -114,7 +114,7 @@ public class VentanaPPal implements IVentanaPrincipal {
 		txtpnDescSim.setText("Generar una secuencia de N s\u00EDmbolos de una fuente seg\u00FAn una distribuci\u00F3n \r\nde probabilidad.");
 		txtpnDescSim.setBackground(Color.DARK_GRAY);
 		txtpnDescSim.setForeground(new Color(255, 255, 255));
-		txtpnDescSim.setBounds(129, 43, 537, 50);
+		txtpnDescSim.setBounds(129, 31, 537, 50);
 		panelSimulacion.add(txtpnDescSim);
 		
 		JPanel panelCalc = new JPanel();
@@ -126,11 +126,11 @@ public class VentanaPPal implements IVentanaPrincipal {
 		});
 		panelCalc.setBackground(Color.DARK_GRAY);
 		panelCalc.setLayout(null);
-		panelCalc.setBounds(10, 229, 666, 122);
+		panelCalc.setBounds(10, 182, 666, 107);
 		panel_2.add(panelCalc);
 		
 		JPanel panel_4_1 = new JPanel();
-		panel_4_1.setBounds(0, 10, 119, 102);
+		panel_4_1.setBounds(0, 10, 119, 75);
 		panelCalc.add(panel_4_1);
 		panel_4_1.setLayout(null);
 		panel_4_1.setBorder(new LineBorder(UIManager.getColor("MenuItem.selectionBackground"), 4));
@@ -142,7 +142,7 @@ public class VentanaPPal implements IVentanaPrincipal {
 		txtpnCalculos.setForeground(SystemColor.menu);
 		txtpnCalculos.setFont(new Font("Tahoma", Font.BOLD, 14));
 		txtpnCalculos.setBackground(SystemColor.textInactiveText);
-		txtpnCalculos.setBounds(10, 41, 82, 26);
+		txtpnCalculos.setBounds(10, 29, 82, 26);
 		panel_4_1.add(txtpnCalculos);
 		
 		JTextPane txtpnDescCalc = new JTextPane();
@@ -151,8 +151,45 @@ public class VentanaPPal implements IVentanaPrincipal {
 		txtpnDescCalc.setForeground(Color.WHITE);
 		txtpnDescCalc.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		txtpnDescCalc.setBackground(Color.DARK_GRAY);
-		txtpnDescCalc.setBounds(129, 41, 537, 50);
+		txtpnDescCalc.setBounds(129, 24, 537, 50);
 		panelCalc.add(txtpnDescCalc);
+		
+		JPanel panelMarkov = new JPanel();
+		panelMarkov.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				ventanaMarkov.getFrame().setVisible(true);
+			}
+		});
+		panelMarkov.setLayout(null);
+		panelMarkov.setBackground(Color.DARK_GRAY);
+		panelMarkov.setBounds(10, 299, 666, 107);
+		panel_2.add(panelMarkov);
+		
+		JPanel panel_4_1_1 = new JPanel();
+		panel_4_1_1.setLayout(null);
+		panel_4_1_1.setBorder(new LineBorder(UIManager.getColor("MenuItem.selectionBackground"), 4));
+		panel_4_1_1.setBackground(SystemColor.textInactiveText);
+		panel_4_1_1.setBounds(0, 10, 119, 75);
+		panelMarkov.add(panel_4_1_1);
+		
+		JTextPane txtpnMarkov = new JTextPane();
+		txtpnMarkov.setText("MARKOV\r\n");
+		txtpnMarkov.setForeground(SystemColor.menu);
+		txtpnMarkov.setFont(new Font("Tahoma", Font.BOLD, 14));
+		txtpnMarkov.setEditable(false);
+		txtpnMarkov.setBackground(SystemColor.textInactiveText);
+		txtpnMarkov.setBounds(10, 29, 82, 26);
+		panel_4_1_1.add(txtpnMarkov);
+		
+		JTextPane txtpnGenerarFuentesDel = new JTextPane();
+		txtpnGenerarFuentesDel.setText("Generar fuentes del tipo de Markov a partir de una matriz de\r\ntransici\u00F3n de estados.");
+		txtpnGenerarFuentesDel.setForeground(Color.WHITE);
+		txtpnGenerarFuentesDel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		txtpnGenerarFuentesDel.setEditable(false);
+		txtpnGenerarFuentesDel.setBackground(Color.DARK_GRAY);
+		txtpnGenerarFuentesDel.setBounds(129, 24, 537, 50);
+		panelMarkov.add(txtpnGenerarFuentesDel);
 	}
 
 	@Override
@@ -160,11 +197,17 @@ public class VentanaPPal implements IVentanaPrincipal {
         this.ventanaSimulacion.getBtnNuevo().addActionListener(actionListener);
         this.ventanaSimulacion.getBtnSimular().addActionListener(actionListener);
         this.ventanaCalculos.getBtnCalcular().addActionListener(actionListener);
+        this.ventanaMarkov.getBtnNuevo().addActionListener(actionListener);
+        this.ventanaMarkov.getBtnGenerar().addActionListener(actionListener);
         this.ventanaDialogNArch.getBtnDialogOK().addActionListener(actionListener);
     }
 
 	public JFrame getFrame() {
 		return frame;
+	}
+
+	public VentanaMarkov getVentanaMarkov() {
+		return ventanaMarkov;
 	}
 
 	public VentanaSimulacion getVentanaSimulacion() {

@@ -23,8 +23,14 @@ public class Controlador implements ActionListener{
 		this.vista.addActionListener(this); //aca ya se agregan los action listener de todas las ventanas
 		this.vista.getVentanaSimulacion().refrescarLista(calculador.listarArchivos());
 		this.vista.getVentanaCalculos().refrescarLista(calculador.listarArchivos());
+		this.vista.getVentanaMarkov().refrescarLista(calculador.listarArchivos());
 	}
-
+    
+    public void generarMarkov() {
+		// TODO Auto-generated method stub
+		
+	}
+	
     public void realizarCalculos() {
     	//hacer verificacion por formato?
     	this.vista.getVentanaCalculos().getTextAreaCantInfo().setText("");
@@ -101,8 +107,13 @@ public class Controlador implements ActionListener{
 	    }else
     	if(comando.equalsIgnoreCase("CALCULAR")){
         	realizarCalculos();
+    	}else
+    	if(comando.equalsIgnoreCase("GENERAR")){
+        	generarMarkov();
         }
         
     }
+
+
 	
 }
