@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import base.Calculador;
 import base.Parser;
 import excepciones.CantidadIncorrectaException;
+import excepciones.MatrizIncorrectaException;
 import excepciones.SumaIncorrectaException;
 import excepciones.ValorIncorrectoException;
 import interfaces.IVentanaPrincipal;
@@ -27,7 +28,19 @@ public class Controlador implements ActionListener{
 	}
     
     public void generarMarkov() {
-		// TODO Auto-generated method stub
+		if(this.vista.getVentanaMarkov().getListArchivos().isSelectionEmpty())
+		{
+			this.vista.lanzarCartelError("Primero seleccione un archivo");
+			return;
+		}
+		try {
+			Parser.get_instancia().parsearMatriz(this.vista.getVentanaMarkov().getTextAreaMatrix().getText(),
+					Integer.valueOf(vista.getVentanaMarkov().getTextFieldN().getText()));
+		} catch (NumberFormatException e) {
+			this.vista.lanzarCartelError("Error de formato");
+		} catch (MatrizIncorrectaException e) {
+			this.vista.lanzarCartelError("Ingrese una matriz con N columnas y filas");
+		}
 		
 	}
 	

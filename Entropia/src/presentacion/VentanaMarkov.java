@@ -40,7 +40,7 @@ public class VentanaMarkov {
 	private JTextField textFieldN = new JTextField();;
 	private JButton btnGenerar = new JButton("GENERAR\r\n");
 	private JButton btnNuevo = new JButton("Crear archivo");
-	private JTextArea textAreaDistribucionProb = new JTextArea();
+	private JTextArea textAreaMatrix = new JTextArea();
 	private DefaultListModel<String> listaModeloArchivos = new DefaultListModel<String>();
 	private JList listArchivos = new JList();
 	
@@ -49,8 +49,8 @@ public class VentanaMarkov {
 	 */
 	public VentanaMarkov() {
 		initialize();
-		this.btnGenerar.setActionCommand("SIMULAR");
-		this.btnNuevo.setActionCommand("CREAR ARCH");
+		this.btnGenerar.setActionCommand("GENERAR");
+		this.btnNuevo.setActionCommand("Crear Archivo");
 		
 		listArchivos.setModel(listaModeloArchivos);
 		listArchivos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -102,9 +102,9 @@ public class VentanaMarkov {
 		frame.getContentPane().add(txtpnMatrizTrans);
 		
 		
-		textAreaDistribucionProb.setBackground(new Color(255, 255, 255));
-		textAreaDistribucionProb.setBounds(23, 255, 547, 156);
-		frame.getContentPane().add(textAreaDistribucionProb);
+		textAreaMatrix.setBackground(new Color(255, 255, 255));
+		textAreaMatrix.setBounds(23, 255, 547, 156);
+		frame.getContentPane().add(textAreaMatrix);
 		
 		JTextPane txtpnNcantidadDe = new JTextPane();
 		txtpnNcantidadDe.setText("N (cantidad de filas de la matriz)");
@@ -149,8 +149,8 @@ public class VentanaMarkov {
 		return textFieldN;
 	}
 
-	public JTextArea getTextAreaDistribucionProb() {
-		return textAreaDistribucionProb;
+	public JTextArea getTextAreaMatrix() {
+		return textAreaMatrix;
 	}
 	
 	public void refrescarLista(ArrayList<String> listaArch) {

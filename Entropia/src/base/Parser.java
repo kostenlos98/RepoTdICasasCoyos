@@ -2,11 +2,13 @@ package base;
 
 import java.util.HashMap;
 
+import excepciones.MatrizIncorrectaException;
 import interfaces.IParser;
 
 public class Parser implements IParser{
 	
 	private HashMap<String, Double> hashMapActual;
+	private double matriz[][];
 	private static Parser _instancia;
 	
 	private Parser() {
@@ -22,10 +24,31 @@ public class Parser implements IParser{
 			linea_act = lineas[i];
 			tokens_act = linea_act.split(" ");
 			hashMapActual.put(tokens_act[0], Double.valueOf(tokens_act[1]));
-
-			
 		}
 		
+	}
+	
+	public void parsearMatriz(String texto, int N) throws NumberFormatException, MatrizIncorrectaException
+	{
+		String lineas[];
+		String lineaAct[];
+		this.matriz = new double[N][N];
+		lineas = texto.split("\n");
+		if(lineas.length!=N)
+			throw new MatrizIncorrectaException();
+		double dato;
+		for(int i=0;i<N;i++)
+		{
+				
+			lineaAct=lineas[i].split(" ");
+			if(lineaAct.length!=N)
+				throw new MatrizIncorrectaException();
+			for(int j=0;j<N;j++)
+			{
+				dato = Double.parseDouble(lineaAct[j]);
+				matriz[i][j]= dato;
+			}
+		}	
 	}
 	
 	public HashMap<String, Double> getHashMapActual() {
