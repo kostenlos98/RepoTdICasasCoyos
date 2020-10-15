@@ -43,6 +43,8 @@ public class VentanaMarkov {
 	private JTextArea textAreaMatrix = new JTextArea();
 	private DefaultListModel<String> listaModeloArchivos = new DefaultListModel<String>();
 	private JList listArchivos = new JList();
+	private JTextField textFieldVectEst;
+	private JTextField textFieldEntrp;
 	
 	/**
 	 * Create the application.
@@ -50,12 +52,42 @@ public class VentanaMarkov {
 	public VentanaMarkov() {
 		initialize();
 		this.btnGenerar.setActionCommand("GENERAR");
-		this.btnNuevo.setActionCommand("Crear Archivo");
+		this.btnNuevo.setActionCommand("CREAR ARCH");
 		
 		listArchivos.setModel(listaModeloArchivos);
 		listArchivos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listArchivos.setBounds(23, 123, 392, 91);
 		frame.getContentPane().add(listArchivos);
+		
+		JTextPane txtpnEntropia = new JTextPane();
+		txtpnEntropia.setText("Entropia");
+		txtpnEntropia.setForeground(Color.WHITE);
+		txtpnEntropia.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtpnEntropia.setBackground(Color.BLACK);
+		txtpnEntropia.setBounds(368, 404, 138, 19);
+		frame.getContentPane().add(txtpnEntropia);
+		
+		JTextPane txtpnVectorEstacionario = new JTextPane();
+		txtpnVectorEstacionario.setText("Vector estacionario");
+		txtpnVectorEstacionario.setForeground(Color.WHITE);
+		txtpnVectorEstacionario.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtpnVectorEstacionario.setBackground(Color.BLACK);
+		txtpnVectorEstacionario.setBounds(23, 476, 286, 19);
+		frame.getContentPane().add(txtpnVectorEstacionario);
+		
+		textFieldVectEst = new JTextField();
+		textFieldVectEst.setEditable(false);
+		textFieldVectEst.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		textFieldVectEst.setColumns(10);
+		textFieldVectEst.setBounds(23, 517, 300, 30);
+		frame.getContentPane().add(textFieldVectEst);
+		
+		textFieldEntrp = new JTextField();
+		textFieldEntrp.setEditable(false);
+		textFieldEntrp.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		textFieldEntrp.setColumns(10);
+		textFieldEntrp.setBounds(366, 445, 96, 30);
+		frame.getContentPane().add(textFieldEntrp);
 		frame.getRootPane().setWindowDecorationStyle(JRootPane.NONE); 
 		
 	}
@@ -67,7 +99,7 @@ public class VentanaMarkov {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.BLACK);
 		frame.setBackground(Color.BLACK);
-		frame.setBounds(100, 100, 598, 585);
+		frame.setBounds(100, 100, 588, 621);
 		frame.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
@@ -81,7 +113,7 @@ public class VentanaMarkov {
 		txtpnTitulo.setBackground(Color.BLUE);
 		txtpnTitulo.setEditable(false);
 		txtpnTitulo.setFont(new Font("Nirmala UI", Font.BOLD, 18));
-		txtpnTitulo.setText("SIMULACION");
+		txtpnTitulo.setText("MARKOV");
 		txtpnTitulo.setBounds(10, 10, 132, 39);
 		panel.add(txtpnTitulo);
 		
@@ -103,7 +135,7 @@ public class VentanaMarkov {
 		
 		
 		textAreaMatrix.setBackground(new Color(255, 255, 255));
-		textAreaMatrix.setBounds(23, 255, 547, 156);
+		textAreaMatrix.setBounds(23, 255, 483, 139);
 		frame.getContentPane().add(textAreaMatrix);
 		
 		JTextPane txtpnNcantidadDe = new JTextPane();
@@ -111,19 +143,19 @@ public class VentanaMarkov {
 		txtpnNcantidadDe.setForeground(Color.WHITE);
 		txtpnNcantidadDe.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		txtpnNcantidadDe.setBackground(Color.BLACK);
-		txtpnNcantidadDe.setBounds(23, 454, 286, 19);
+		txtpnNcantidadDe.setBounds(23, 404, 286, 19);
 		frame.getContentPane().add(txtpnNcantidadDe);
 		
 		textFieldN = new JTextField();
 		textFieldN.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		textFieldN.setBounds(23, 483, 96, 30);
+		textFieldN.setBounds(23, 434, 96, 30);
 		frame.getContentPane().add(textFieldN);
 		textFieldN.setColumns(10);
 		
 		btnGenerar.setActionCommand("GENERAR");
 		btnGenerar.setForeground(new Color(255, 0, 102));
 		btnGenerar.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		btnGenerar.setBounds(362, 481, 132, 30);
+		btnGenerar.setBounds(432, 532, 132, 30);
 		frame.getContentPane().add(btnGenerar);
 		
 		btnNuevo.setActionCommand("CREAR ARCH");
@@ -182,5 +214,14 @@ public class VentanaMarkov {
 	{
 		return (String) this.listArchivos.getSelectedValue().toString();
 	}
+
+	public JTextField getTextFieldVectEst() {
+		return textFieldVectEst;
+	}
+
+	public JTextField getTextFieldEntrp() {
+		return textFieldEntrp;
+	}
+	
 	
 }
