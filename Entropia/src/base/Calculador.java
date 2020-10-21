@@ -2,6 +2,7 @@ package base;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -156,6 +157,123 @@ public class Calculador implements ICalculador {
 		}
 		return listaArch;
 	}
+	    
+    public double entropiaEstacionario(double[][] matTrans, double[] estacionario, int cantSimbolos)
+    {
+        double totalCol, entropia=0;
+        int i,j;
+        
+        for(j=0; j<cantSimbolos;j++)
+        {
+            totalCol=0;
+            for(i=0;i<cantSimbolos;i++)
+            {
+                if(matTrans[i][j]!=0)
+                {
+                    totalCol+=matTrans[i][j]*(Math.log(1/matTrans[i][j])/Math.log(2));
+                }
+            }
+            entropia += estacionario[j]*totalCol;
+        }
+        return entropia;
+    }
+    
+       public double[][] matAmpliada(double[][] matTrans)
+       {
+           double[][] matAmp = new double[matTrans.length][matTrans[0].length+1];
+           
+           for (int i = 0 ; i < matTrans.length; i++)
+           {
+               for (int j = 0; j < matTrans[0].length; j++)
+               {
+                   matAmp[i][j] = matTrans[i][j];
+                   if (i == j)
+                   {
+                       matAmp[i][j] -= 1;
+                   }
+               }
+           }
+           for (int j = 0; j < matAmp[0].length ; j++)
+           {
+               matAmp[matAmp.length-1][j]=1;
+               //matAmp[0][j]=1;
+           }
+           
+           return matAmp;
+       }
+       
+    public double[] sistDiagonal(double[][] matAmp)// genera matriz de soluciones Xi = Bi / Aii, varios sist. a la vez
+    {
+        double[] vec = new double[matAmp.length];
+        int i;
+    
+        for(i=0 ; i < matAmp.length ; i++)
+            vec[i] = matAmp[i][matAmp[0].length-1] / matAmp[i][i];
+        return vec;
+    }
+    
+    public int pivoteoParcial(double[][] matAmp, int t)
+    {
+        int errorCL = 0, j, cantFilas = matAmp.length, i, filaPV, cantCol = matAmp[0].length;
+        double[] vecAux = new double[cantCol];
+        
+        filaPV = t;
+        for (i = t + 1; i < cantFilas; i++) /* busco fila pivot */
+            if (Math.abs(matAmp[i][t]) > Math.abs(matAmp[filaPV][t]))
+                filaPV = i;    
+        if (Math.abs(matAmp[filaPV][t]) == 0)
+            errorCL = 1;
+        else
+        {
+            if (filaPV != t) /* intercambio filas */
+            {
+               for (j = 0; j < cantCol; j++)
+                    vecAux[j] = matAmp[t][j];
+               for (j = 0; j < cantCol; j++)
+                    matAmp[t][j] = matAmp[filaPV][j];
+               for (j = 0; j < cantCol; j++)
+                    matAmp[filaPV][j] = vecAux[j]; 
+            }
+        }
+        
+        return errorCL;
+    }
+    
+    public void gaussJordan(double[][] matAmp)
+    {
+        int i, j, t = 0, errorCL = 0, cantFilas = matAmp.length, cantCol = matAmp[0].length;
+        
+        while ((t < cantFilas) && (errorCL != 1))
+        {
+            errorCL = this.pivoteoParcial(matAmp, t);
+            if (errorCL != 1)
+            {
+                for (i = 0; i <= (t - 1) ; i++) /* Triangulo Superior */
+                {
+                    for (j = t + 1; j < cantCol; j++)
+                        matAmp[i][j] = matAmp[i][j] - matAmp[t][j] * matAmp[i][t] / matAmp[t][t];
+                    matAmp[i][t] = 0.0;
+                }
+                for (i = t + 1; i < cantFilas ; i++) /* Triangulo Inferior */
+                {
+                    for (j = t + 1; j < cantCol; j++)   
+                        matAmp[i][j] = matAmp[i][j] - matAmp[t][j] * matAmp[i][t] / matAmp[t][t];
+                    matAmp[i][t] = 0.0;
+                }
+                t++;
+            }
+            else
+                System.out.println("Error: Pivot = 0.0. Sist. Indeterminado: ecuaciones son comb. lineal.");
+        }
+    }
+    
+    public double[] generaVectorEstacionario(double[][] matTrans)
+    {
+        double[][] matAmp = this.matAmpliada(matTrans);
+        this.gaussJordan(matAmp);
+        return this.sistDiagonal(matAmp);
+    }
+    
 
 	public HashMap<String, Double> getProbsAct() {
 		return probsAct;

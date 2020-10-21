@@ -3,6 +3,8 @@ package negocio;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Map.Entry;
 
 import base.Calculador;
@@ -36,6 +38,17 @@ public class Controlador implements ActionListener{
 		try {
 			Parser.get_instancia().parsearMatriz(this.vista.getVentanaMarkov().getTextAreaMatrix().getText(),
 					Integer.valueOf(vista.getVentanaMarkov().getTextFieldN().getText()));
+	        NumberFormat formatter = new DecimalFormat("#0.000");   
+	        double[][] matTrans = Parser.get_instancia().getMatriz();
+	        double[] vecEstacionario = this.calculador.generaVectorEstacionario(matTrans);
+	        StringBuilder str = new StringBuilder();
+	        for (int i = 0; i < vecEstacionario.length ; i++)
+	            str.append(formatter.format(vecEstacionario[i]) + "   ");
+	        this.vista.getVentanaMarkov().getTextFieldVectEst().setText(str.toString());
+	        this.vista.getVentanaMarkov().getTextFieldEntrp().setText(String.valueOf(formatter.format(this.calculador.entropiaEstacionario(matTrans, 
+	        		vecEstacionario, 
+	        		Integer.valueOf(vista.getVentanaMarkov().getTextFieldN().getText())))));
+	        
 		} catch (NumberFormatException e) {
 			this.vista.lanzarCartelError("Error de formato");
 		} catch (MatrizIncorrectaException e) {
@@ -111,12 +124,14 @@ public class Controlador implements ActionListener{
         if(comando.equalsIgnoreCase("CREAR ARCH")){
             this.vista.getDialogNArch().setVisible(true);
             this.vista.getVentanaSimulacion().refrescarLista(calculador.listarArchivos());
+            this.vista.getVentanaMarkov().refrescarLista(calculador.listarArchivos());
         }else
 	    if(comando.equalsIgnoreCase("OK CREAR ARCH")){
 	        this.calculador.nuevoArchivo(this.vista.getDialogNArch().getTfNombreNArch().getText());
 	        this.vista.getDialogNArch().setVisible(false);
 	        this.vista.getVentanaSimulacion().refrescarLista(calculador.listarArchivos());
 	        this.vista.getVentanaCalculos().refrescarLista(calculador.listarArchivos());
+	        this.vista.getVentanaMarkov().refrescarLista(calculador.listarArchivos());
 	    }else
     	if(comando.equalsIgnoreCase("CALCULAR")){
         	realizarCalculos();

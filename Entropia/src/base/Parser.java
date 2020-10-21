@@ -64,6 +64,11 @@ public class Parser implements IParser{
 			_instancia = new Parser();
 		return _instancia;
 	}
+
+	public double[][] getMatriz() {
+		return matriz;
+	}
+	
 	
 	
 	
