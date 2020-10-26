@@ -51,6 +51,23 @@ public class Parser implements IParser{
 		}	
 	}
 	
+	public String[][] obtenerMatrizPCod(String texto) {
+		String lineas[];
+		String lineaAct[];
+		lineas = texto.split("\n");
+		int N = lineas.length;
+		String retorno[][] = new String[N][3];
+		for(int i=0;i<N;i++)
+		{
+			lineaAct=lineas[i].split(" ");
+			for(int j=0;j<N;j++)
+			{
+				retorno[i][j]= lineaAct[j];
+			}
+		}
+		return retorno;
+	}
+	
 	public HashMap<String, Double> getHashMapActual() {
 		return hashMapActual;
 	}

@@ -32,12 +32,12 @@ public class CalculosCodigos {
 		return false;
 	}
 	
-	public boolean cumpleKraft(String codigos[],char alfabeto[])
+	public boolean cumpleKraft(String codigos[])
 	{
 		double acum=0;
 		for(int i = 0;i<codigos.length;i++)
 		{
-			acum+=Math.pow(alfabeto.length,-codigos[i].length());
+			acum+=Math.pow(2,-codigos[i].length());
 		}
 		if(acum<=1)
 			return true;
@@ -45,7 +45,7 @@ public class CalculosCodigos {
 			return false;
 	}
 	
-	public double calcularEntropia(double probs[])
+	public double calcularEntropia(Double probs[])
 	{
 		double acum=0;
 		for(int i=0;i<probs.length;i++)
@@ -55,7 +55,7 @@ public class CalculosCodigos {
 		return acum;
 	}
 	
-	public double calcularLongitudMedia(double probs[],String codigos[])
+	public double calcularLongitudMedia(Double probs[],String codigos[])
 	{
 		double acum = 0;
 		for(int i=0;i<codigos.length;i++)
@@ -66,7 +66,7 @@ public class CalculosCodigos {
 	}
 	
 	//????????
-	public boolean esCodigoCompacto(double probs[],String codigos[])
+	public boolean esCodigoCompacto(Double probs[],String codigos[])
 	{
 		if(calcularEntropia(probs) == calcularLongitudMedia(probs, codigos))
 		{
@@ -77,7 +77,7 @@ public class CalculosCodigos {
 		}
 	}
 	
-	public String[] generarCodigo(double probs[], char alfabeto[])
+	public void generarCodigo(String nombreArch, Double probs[])
 	{
 		String codigos[] = new String[probs.length];
 		int longitud = (int) Math.floor(Math.sqrt(probs.length)) +1;
@@ -91,8 +91,13 @@ public class CalculosCodigos {
 			}
 			
 		}
-		
-		return codigos;
+		StringBuilder str = new StringBuilder();
+		for(int i=0; i<codigos.length; i++) {
+			str.append("S"+(i+1)+" "+codigos[i]+" "+probs[i]);
+			str.append("/n");
+		}
+		GestorArchs.get_instancia().actualizarArchivo(nombreArch, str.toString());
+
 	}
 
 }

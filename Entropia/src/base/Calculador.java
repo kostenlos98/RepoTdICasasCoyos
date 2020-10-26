@@ -99,7 +99,7 @@ public class Calculador implements ICalculador {
 			randActual = Math.random();
 			str.append(establecerSimbolo(claves,valores,randActual));
 		}
-		this.actualizarArchivo(nombreArch, str.toString());
+		GestorArchs.get_instancia().actualizarArchivo(nombreArch, str.toString());
 	}
 	
 	public String establecerSimbolo(String[] claves, Double[] valores, double randActual) {
@@ -113,51 +113,7 @@ public class Calculador implements ICalculador {
 			return claves[i];
 			              
 	}
-	
-	public void nuevoArchivo(String nombre) {
-        try {
-            String ruta = "./datos/" + nombre + ".txt";
-            File file = new File(ruta);
-            // Si el archivo no existe es creado
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-	}
-	
-	public void actualizarArchivo(String nombre,String datos)
-	{
-		try {
-			String ruta = ".\\datos\\" + nombre;
-			FileWriter fileWriter = new FileWriter(ruta.trim());
-			fileWriter.write(datos);
-			fileWriter.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
-	
-	public ArrayList<String> listarArchivos() {
-		ArrayList<String> listaArch = new ArrayList<String>();
-		File carpeta = new File("./datos");
-		File[] archivos = carpeta.listFiles();
-		if (archivos == null || archivos.length == 0) {
-			listaArch.add("La carpeta datos esta vacia!");
-		}
-		else {
-		    for (int i=0; i< archivos.length; i++) {
-		    	if(!archivos[i].isDirectory()) {
-		    		listaArch.add(archivos[i].getName()+"\n");
-		    	}
-		    }
-		}
-		return listaArch;
-	}
-	    
+	  
     public double entropiaEstacionario(double[][] matTrans, double[] estacionario, int cantSimbolos)
     {
         double totalCol, entropia=0;

@@ -2,14 +2,16 @@ package inicio;
 
 import java.awt.EventQueue;
 
+import negocio.ControladorVPCod;
 import negocio.ControladorVPPal;
 import presentacion.VentanaPPal;
+import presentacion.VentanaPPalPCod;
 
-public class Inicio {
+public class InicioPCod {
 
 	public static void main(String[] args) {
-		VentanaPPal window = new VentanaPPal();
-		ControladorVPPal controlador = new ControladorVPPal(window);
+		VentanaPPalPCod window = new VentanaPPalPCod();
+		ControladorVPCod controlador = new ControladorVPCod(window);
 		window.getFrame().setVisible(true); 
 	}
 

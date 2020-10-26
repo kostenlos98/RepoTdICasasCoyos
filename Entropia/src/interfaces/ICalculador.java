@@ -10,6 +10,4 @@ import excepciones.ValorIncorrectoException;
 public interface ICalculador {
 	double calcularProb();
 	void hacerSimulacion(String rutaArch, HashMap<String, Double> probs, int N) throws CantidadIncorrectaException, SumaIncorrectaException, ValorIncorrectoException;
-	void nuevoArchivo(String nombre);
-	ArrayList<String> listarArchivos();
 }

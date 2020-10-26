@@ -8,6 +8,7 @@ import java.text.NumberFormat;
 import java.util.Map.Entry;
 
 import base.Calculador;
+import base.GestorArchs;
 import base.Parser;
 import excepciones.CantidadIncorrectaException;
 import excepciones.MatrizIncorrectaException;
@@ -15,18 +16,19 @@ import excepciones.SumaIncorrectaException;
 import excepciones.ValorIncorrectoException;
 import interfaces.IVentanaPrincipal;
 
-public class Controlador implements ActionListener{
+public class ControladorVPPal implements ActionListener{
 	
 	private IVentanaPrincipal vista;
 	private Calculador calculador = new Calculador();
 	
-    public Controlador(IVentanaPrincipal vista) {
+    public ControladorVPPal(IVentanaPrincipal vista) {
 		super();
 		this.vista = vista;
 		this.vista.addActionListener(this); //aca ya se agregan los action listener de todas las ventanas
-		this.vista.getVentanaSimulacion().refrescarLista(calculador.listarArchivos());
-		this.vista.getVentanaCalculos().refrescarLista(calculador.listarArchivos());
-		this.vista.getVentanaMarkov().refrescarLista(calculador.listarArchivos());
+		this.vista.getVentanaSimulacion().refrescarLista(GestorArchs.get_instancia().listarArchivos());
+		this.vista.getVentanaCalculos().refrescarLista(GestorArchs.get_instancia().listarArchivos());
+		this.vista.getVentanaMarkov().refrescarLista(GestorArchs.get_instancia().listarArchivos());
+		
 	}
     
     public void generarMarkov() {
@@ -58,7 +60,6 @@ public class Controlador implements ActionListener{
 	}
 	
     public void realizarCalculos() {
-    	//hacer verificacion por formato?
     	this.vista.getVentanaCalculos().getTextAreaCantInfo().setText("");
     	if(this.vista.getVentanaCalculos().getListArchivos().isSelectionEmpty())
 		{
@@ -73,12 +74,12 @@ public class Controlador implements ActionListener{
     			this.vista.lanzarCartelError("Error al hacer los calculos");
     		}
         	for (Entry<String, Double> estado:this.calculador.getCantInfoAct().entrySet())
-        		this.vista.getVentanaCalculos().getTextAreaCantInfo().append("P("+estado.getKey()+") = "+estado.getValue()+"\n");
+        		this.vista.getVentanaCalculos().getTextAreaCantInfo().append("I("+estado.getKey()+") = "+estado.getValue()+"\n");
         		
         	this.vista.getVentanaCalculos().getTextFieldEntropia().setText(String.valueOf(this.calculador.getEntropiaAct()));
     	}
     }
-    
+     
     public void realizarSimulacion() {
     	if(this.vista.getVentanaSimulacion().getListArchivos().isSelectionEmpty())
 		{
@@ -123,15 +124,15 @@ public class Controlador implements ActionListener{
         }else
         if(comando.equalsIgnoreCase("CREAR ARCH")){
             this.vista.getDialogNArch().setVisible(true);
-            this.vista.getVentanaSimulacion().refrescarLista(calculador.listarArchivos());
-            this.vista.getVentanaMarkov().refrescarLista(calculador.listarArchivos());
+            this.vista.getVentanaSimulacion().refrescarLista(GestorArchs.get_instancia().listarArchivos());
+            this.vista.getVentanaMarkov().refrescarLista(GestorArchs.get_instancia().listarArchivos());
         }else
 	    if(comando.equalsIgnoreCase("OK CREAR ARCH")){
-	        this.calculador.nuevoArchivo(this.vista.getDialogNArch().getTfNombreNArch().getText());
+	    	GestorArchs.get_instancia().nuevoArchivo(this.vista.getDialogNArch().getTfNombreNArch().getText());
 	        this.vista.getDialogNArch().setVisible(false);
-	        this.vista.getVentanaSimulacion().refrescarLista(calculador.listarArchivos());
-	        this.vista.getVentanaCalculos().refrescarLista(calculador.listarArchivos());
-	        this.vista.getVentanaMarkov().refrescarLista(calculador.listarArchivos());
+	        this.vista.getVentanaSimulacion().refrescarLista(GestorArchs.get_instancia().listarArchivos());
+	        this.vista.getVentanaCalculos().refrescarLista(GestorArchs.get_instancia().listarArchivos());
+	        this.vista.getVentanaMarkov().refrescarLista(GestorArchs.get_instancia().listarArchivos());
 	    }else
     	if(comando.equalsIgnoreCase("CALCULAR")){
         	realizarCalculos();
@@ -139,7 +140,6 @@ public class Controlador implements ActionListener{
     	if(comando.equalsIgnoreCase("GENERAR")){
         	generarMarkov();
         }
-        
     }
 
 
