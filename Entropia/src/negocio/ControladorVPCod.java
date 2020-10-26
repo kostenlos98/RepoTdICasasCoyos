@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.Iterator;
 import java.util.Map.Entry;
 
 import base.Calculador;
@@ -35,6 +36,7 @@ public class ControladorVPCod implements ActionListener{
 	
     public Double[] parseStringColumn(String array[]) {
     	Double retorno[] = new Double[array.length];
+    	System.out.println("prueba");
     	for(int i=0; i<array.length; i++) {
     		retorno[i] = Double.parseDouble(array[i]);
     	}
@@ -51,11 +53,17 @@ public class ControladorVPCod implements ActionListener{
         	try {
     			String nombreArch = (String) this.vista.getVentanaCalcPCod().getNombreSeleccionado();
     			String textoArch = GestorArchs.get_instancia().getTextoArch(nombreArch);
+    			String codigos[];
+    			Double probs[];
     			String[][] matrizArch = Parser.get_instancia().obtenerMatrizPCod(textoArch);
-				String simbolos[] = matrizArch[0];
-				String codigos[] = matrizArch[1];
-				Double probs[] = parseStringColumn(matrizArch[2]);
-				
+    			codigos = new String[matrizArch.length];
+    			probs = new Double[matrizArch.length];
+    			for(int i=0;i<matrizArch.length;i++)
+    			{
+    				codigos[i] = matrizArch[i][1];
+    				probs[i] = Double.parseDouble(matrizArch[i][2]);
+    			}
+
 				Double entropia = calcCod.calcularEntropia(probs);
 				Double longitudMedia = calcCod.calcularLongitudMedia(probs,codigos);
 				boolean isKraft = calcCod.cumpleKraft(codigos);
@@ -88,7 +96,13 @@ public class ControladorVPCod implements ActionListener{
 		}
         try 
         {
-        	Double[] resParseo = (Double[]) Parser.get_instancia().getHashMapActual().values().toArray();
+        	Double[] resParseo = new Double[Parser.get_instancia().getHashMapActual().size()];
+        	int i=0;
+        	for(Double datoDouble:Parser.get_instancia().getHashMapActual().values())
+        	{
+        		resParseo[i]=datoDouble;
+        		i++;
+        	}
 			this.calcCod.generarCodigo((String) this.vista.getVentanaPCod().getNombreSeleccionado(),
 										resParseo);
 			this.vista.lanzarCartelError("El codigo ha sido generado exitosamente!");

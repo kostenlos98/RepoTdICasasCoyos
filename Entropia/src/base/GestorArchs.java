@@ -2,10 +2,12 @@ package base;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class GestorArchs {
 	private static GestorArchs _instancia;
@@ -64,9 +66,20 @@ public class GestorArchs {
 		return listaArch;
 	}
 	
-	public String getTextoArch(String nombre) {
+	public String getTextoArch(String nombre) throws FileNotFoundException {
 		String todo = "";
-		try(BufferedReader br = new BufferedReader(new FileReader("file.txt"))) {
+		Scanner input = new Scanner(new File(".\\datos\\" + nombre.trim()));
+		StringBuilder sb = new StringBuilder();
+		while(input.hasNextLine())
+		{
+			String linea = input.nextLine();
+			sb.append(linea);
+			sb.append(System.lineSeparator());
+			
+		}
+		todo = sb.toString();
+		return todo;
+		/*try(BufferedReader br = new BufferedReader(new FileReader("./datos/fuente1.txt"))) {
 		    StringBuilder sb = new StringBuilder();
 		    String line = br.readLine();
 
@@ -81,5 +94,6 @@ public class GestorArchs {
 			e.printStackTrace();
 		}
 		return todo;
+		*/
 	}
 }

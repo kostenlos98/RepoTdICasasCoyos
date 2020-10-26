@@ -65,23 +65,28 @@ public class CalculosCodigos {
 		return acum;
 	}
 	
-	//????????
 	public boolean esCodigoCompacto(Double probs[],String codigos[])
 	{
-		if(calcularEntropia(probs) == calcularLongitudMedia(probs, codigos))
-		{
-			return true;
+		for(int i=0;i<codigos.length;i++)
+		{	
+			double alfaCalculado = -(Math.log(probs[i])/Math.log(2));
+			double alfa = Math.ceil(alfaCalculado);
+			if(codigos[i].length() >alfa)
+			{
+				return false;
+			}
 		}
-		else {
-			return false;
-		}
+		return true;
 	}
 	
 	public void generarCodigo(String nombreArch, Double probs[])
 	{
 		String codigos[] = new String[probs.length];
-		int longitud = (int) Math.floor(Math.sqrt(probs.length)) +1;
-		System.out.println(longitud);
+		int aux = probs.length-1,longitud=0;
+		while(aux > 0) {
+            longitud++;
+            aux = aux >> 1;
+      }
 		for(int i = 0;i<probs.length;i++)
 		{
 			codigos[i] = Integer.toBinaryString(i);
@@ -93,8 +98,7 @@ public class CalculosCodigos {
 		}
 		StringBuilder str = new StringBuilder();
 		for(int i=0; i<codigos.length; i++) {
-			str.append("S"+(i+1)+" "+codigos[i]+" "+probs[i]);
-			str.append("/n");
+			str.append("S"+(i+1)+" "+codigos[i]+" "+probs[i]+"\n");
 		}
 		GestorArchs.get_instancia().actualizarArchivo(nombreArch, str.toString());
 

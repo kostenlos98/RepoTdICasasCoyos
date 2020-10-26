@@ -60,7 +60,7 @@ public class Parser implements IParser{
 		for(int i=0;i<N;i++)
 		{
 			lineaAct=lineas[i].split(" ");
-			for(int j=0;j<N;j++)
+			for(int j=0;j<3;j++)
 			{
 				retorno[i][j]= lineaAct[j];
 			}
