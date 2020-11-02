@@ -1,36 +1,7 @@
 package base;
 
 public class CalculosCodigos {
-	
-	public boolean esCodigoInstantaneo(String codigos[])
-	{
-		String prefijo;
-		for(int i = 0;i<codigos.length;i++)
-		{
-			prefijo="";
-			for(int j = 0;j<codigos[i].length()-1;j++)
-			{
-				prefijo+=codigos[i].charAt(j);
-				if(estaEnCodigo(prefijo, codigos))
-				{
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-	
-	private boolean estaEnCodigo(String palabra, String codigos[])
-	{
-		for(int i = 0;i<codigos.length;i++)
-		{
-			if(codigos[i].equals(palabra))
-			{
-				return true;
-			}
-		}
-		return false;
-	}
+
 	
 	public boolean cumpleKraft(String codigos[])
 	{
@@ -71,7 +42,7 @@ public class CalculosCodigos {
 		{	
 			double alfaCalculado = -(Math.log(probs[i])/Math.log(2));
 			double alfa = Math.ceil(alfaCalculado);
-			if(codigos[i].length() >alfa)
+			if(codigos[i].length() !=alfa)
 			{
 				return false;
 			}
