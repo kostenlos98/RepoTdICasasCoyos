@@ -14,10 +14,10 @@ public class TestHuffman {
 		simbolos[4] =new Simbolo(0.16, "e");
 		simbolos[5] =new Simbolo(0.45, "f");
 		GenerarHuffman generarHuffman = new GenerarHuffman();
-		//generarCodigo.generarHuffman(simbolos);
 		
-		String textoComprimido= generarHuffman.comprimirHuffman(generarHuffman.generarHuffman(simbolos), "baba");
-		System.out.println(textoComprimido);
+
+		System.out.println(generarHuffman.textoComprimido("baba", simbolos));
+		System.out.println(generarHuffman.redundancia(simbolos));
 
 	}
 

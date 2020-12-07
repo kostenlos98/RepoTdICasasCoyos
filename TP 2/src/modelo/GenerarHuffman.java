@@ -24,6 +24,51 @@ public class GenerarHuffman {
 		String codigo;
 	}
 	
+	public double tasaCompresion(String mensajeOriginal,String mensajeComprimido)
+	{
+		return mensajeOriginal.length()*8/mensajeComprimido.length();
+	}
+	
+	public String textoComprimido(String mensaje,Simbolo probSimbolos[])
+	{
+		return comprimirHuffman(generarHuffman(probSimbolos),mensaje);
+	}
+	
+	private double entropia(Simbolo[] simbolos)
+	{
+		ArrayList<Codificacion> codificacion = generarHuffman(simbolos);
+		double acum =0;
+		Iterator<Codificacion> iterator = codificacion.iterator();
+		while(iterator.hasNext())
+		{
+			double probabilidad = iterator.next().probabilidad;
+			acum+=probabilidad*Math.log(1/probabilidad)/Math.log(2);
+		}
+		return acum;
+	}
+	
+	private double longitudMedia(Simbolo[] simbolos)
+	{
+		ArrayList<Codificacion> codificacion = generarHuffman(simbolos);
+		double acum=0;
+		Iterator<Codificacion> iterator = codificacion.iterator();
+		while(iterator.hasNext())
+		{
+			Codificacion codificacionAux = iterator.next();
+			double probabilidad = codificacionAux.probabilidad;
+			double longitud = codificacionAux.codigo.length();
+			acum+=probabilidad*longitud;
+		}
+		return acum;
+	}
+	
+	public double redundancia(Simbolo[] simbolos)
+	{
+		double entropia = entropia(simbolos);
+		double longitudMedia = longitudMedia(simbolos);
+		return entropia(simbolos)/longitudMedia(simbolos);
+	}
+	
 	
 	public ArrayList<Codificacion> generarHuffman(Simbolo[] simbolos)
 	{
@@ -113,7 +158,6 @@ public class GenerarHuffman {
 		{
 			if(!nodo.valor.simbolo.equals(""))
 			{
-				System.out.println(nodo.valor.simbolo+" "+codigo);
 				Codificacion aux = new Codificacion();
 				aux.codigo=codigo;aux.probabilidad=nodo.valor.probabilidad;aux.simbolo=nodo.valor.simbolo.charAt(0);
 				codificacion.add(aux);
