@@ -32,8 +32,26 @@ public class ControladorCompresor implements ActionListener{
 		}
     	else {
         	try {
-    			
+        		compresor.setNombreArchivoSeleccionado(vista.getNombreSeleccionado());
+        		compresor.cargarTextoSeleccionado();
+        		double TC_H = compresor.compresionHuffman();
+        		//compresor.compresionSF();
+        		compresor.compresionRLC();
+        		StringBuilder resultado = new StringBuilder();
+        		resultado.append("*** ARCHIVOS GENERADOS EN CARPETA ORIGEN ***\n");
+        		resultado.append("*** Tasas de compresion ***" + '\n');
+        		resultado.append("TC RLC: "+ '\n');
+        		resultado.append("TC SF: "+ '\n');
+        		resultado.append("TC Huffman: "+ TC_H + '\n');
+        		resultado.append("*** Redundancias y rendimientos  ***" + '\n');
         		
+           		resultado.append("Redundancia SF: "+ '\n');
+        		resultado.append("Rendimiento SF: "+ '\n');
+        		
+        		double redH = compresor.redundanciaH();
+           		resultado.append("Redundancia Huffman: "+ redH + '\n');
+        		resultado.append("Rendimiento Huffman: "+ (1.0 - redH) + '\n');
+        		vista.getTextAreaResultados().setText(resultado.toString());
         		
     		} catch (Exception e) {
     			e.printStackTrace();

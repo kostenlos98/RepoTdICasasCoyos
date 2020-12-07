@@ -41,7 +41,7 @@ public class VentanaCompresor implements IVentanaCompresor {
 
 	private JFrame frame;
 	private JButton btnCalcular = new JButton("CALCULAR");
-	private JTextArea textAreaProbs = new JTextArea();
+	private JTextArea textAreaResultados = new JTextArea();
 	private DefaultListModel<String> listaModeloArchivos = new DefaultListModel<String>();
 	private JList listArchivos = new JList();
 	
@@ -100,12 +100,12 @@ public class VentanaCompresor implements IVentanaCompresor {
 		txtpnResultados.setBackground(Color.BLACK);
 		txtpnResultados.setBounds(23, 226, 371, 19);
 		frame.getContentPane().add(txtpnResultados);
-		textAreaProbs.setEditable(false);
+		textAreaResultados.setEditable(false);
 		
 		
-		textAreaProbs.setBackground(new Color(255, 255, 255));
-		textAreaProbs.setBounds(23, 255, 483, 227);
-		frame.getContentPane().add(textAreaProbs);
+		textAreaResultados.setBackground(new Color(255, 255, 255));
+		textAreaResultados.setBounds(23, 255, 483, 227);
+		frame.getContentPane().add(textAreaResultados);
 		
 		btnCalcular.setActionCommand("CALCULAR");
 		btnCalcular.setForeground(new Color(255, 0, 102));
@@ -124,6 +124,10 @@ public class VentanaCompresor implements IVentanaCompresor {
 
     
     
+	public JTextArea getTextAreaResultados() {
+		return textAreaResultados;
+	}
+
 	public void refrescarLista(ArrayList<String> listaArch) {
 		this.getListaModeloArchivos().clear();
 		Iterator it = listaArch.iterator();

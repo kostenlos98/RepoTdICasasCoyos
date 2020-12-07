@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 
 import interfaces.IVentanaCanales;
 import interfaces.IVentanaCompresor;
+import modelo.CanalModelo;
 import modelo.Compresor;
 import modelo.GestorArchs;
 import modelo.SimuladorCanales;
@@ -26,8 +27,18 @@ public class ControladorCanales implements ActionListener{
 	}
 	
     public void realizarSimulacion() {
-    	//CHECKEAR LAS OTRAS COSAS 
-
+    	if(vista.getTextAreaMatrizCanal().getText() == "" || vista.getTextAreaProbs().getText() == "") 
+    		vista.lanzarCartelError("Debe rellenar todos los campos requeridos!");
+    	else {
+    		CanalModelo canal = new CanalModelo();
+    		StringBuilder resultado = new StringBuilder();
+    		resultado.append("*** Equivocacion ***" + '\n');
+    		
+    		resultado.append("*** Informacion mutua ***" + '\n');
+    		
+    		resultado.append("*** Propiedades de la informacion mutua ***" + '\n');
+    		
+    	}
     }
        
 	@Override

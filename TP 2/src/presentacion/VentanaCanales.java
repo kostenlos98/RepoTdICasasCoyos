@@ -41,6 +41,8 @@ import java.awt.event.MouseEvent;
 public class VentanaCanales implements IVentanaCanales {
 
 	private JFrame frame;
+	private JTextArea textAreaProbs = new JTextArea();
+	private JTextArea textAreaMatrizCanal = new JTextArea();
 	private JButton btnSimular = new JButton("SIMULAR");
 	private JTextArea textAreaResultados = new JTextArea();
 	private DefaultListModel<String> listaModeloArchivos = new DefaultListModel<String>();
@@ -60,28 +62,13 @@ public class VentanaCanales implements IVentanaCanales {
 		txtpnMatrizDelCanal.setBounds(291, 96, 203, 19);
 		frame.getContentPane().add(txtpnMatrizDelCanal);
 		
-		JTextPane txtpnMensaje = new JTextPane();
-		txtpnMensaje.setText("Mensaje\r\n");
-		txtpnMensaje.setForeground(Color.WHITE);
-		txtpnMensaje.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		txtpnMensaje.setEditable(false);
-		txtpnMensaje.setBackground(Color.BLACK);
-		txtpnMensaje.setBounds(23, 224, 77, 19);
-		frame.getContentPane().add(txtpnMensaje);
 		
-		JTextArea textAreaMensaje = new JTextArea();
-		textAreaMensaje.setEditable(false);
-		textAreaMensaje.setBackground(Color.WHITE);
-		textAreaMensaje.setBounds(23, 253, 483, 79);
-		frame.getContentPane().add(textAreaMensaje);
-		
-		JTextArea textAreaProbs = new JTextArea();
 		textAreaProbs.setEditable(false);
 		textAreaProbs.setBackground(Color.WHITE);
 		textAreaProbs.setBounds(23, 123, 189, 91);
 		frame.getContentPane().add(textAreaProbs);
 		
-		JTextArea textAreaMatrizCanal = new JTextArea();
+		
 		textAreaMatrizCanal.setEditable(false);
 		textAreaMatrizCanal.setBackground(Color.WHITE);
 		textAreaMatrizCanal.setBounds(291, 125, 189, 91);
@@ -128,13 +115,13 @@ public class VentanaCanales implements IVentanaCanales {
 		txtpnResultados.setForeground(Color.WHITE);
 		txtpnResultados.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		txtpnResultados.setBackground(Color.BLACK);
-		txtpnResultados.setBounds(23, 342, 77, 19);
+		txtpnResultados.setBounds(23, 238, 77, 19);
 		frame.getContentPane().add(txtpnResultados);
 		textAreaResultados.setEditable(false);
 		
 		
 		textAreaResultados.setBackground(new Color(255, 255, 255));
-		textAreaResultados.setBounds(23, 371, 483, 135);
+		textAreaResultados.setBounds(23, 283, 483, 223);
 		frame.getContentPane().add(textAreaResultados);
 		
 		btnSimular.setActionCommand("CALCULAR");
@@ -157,8 +144,23 @@ public class VentanaCanales implements IVentanaCanales {
         this.getBtnSimular().addActionListener(actionListener);
     }
 
+  
 
-    public void lanzarCartelError(String err) {
+    public JTextArea getTextAreaResultados() {
+		return textAreaResultados;
+	}
+
+	public void lanzarCartelError(String err) {
         JOptionPane.showMessageDialog(null, err);
     }
+
+	public JTextArea getTextAreaProbs() {
+		return textAreaProbs;
+	}
+
+	public JTextArea getTextAreaMatrizCanal() {
+		return textAreaMatrizCanal;
+	}
+	
+	
 }
