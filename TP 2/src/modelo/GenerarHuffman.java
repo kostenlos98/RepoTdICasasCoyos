@@ -26,7 +26,10 @@ public class GenerarHuffman {
 	
 	public double tasaCompresion(String mensajeOriginal,String mensajeComprimido)
 	{
-		return mensajeOriginal.length()*8/mensajeComprimido.length();
+		double longitudOriginal = mensajeOriginal.length()*8;
+		double longitudComprimido = mensajeComprimido.length();
+		double TC=longitudOriginal/longitudComprimido;
+		return TC;
 	}
 	
 	public String textoComprimido(String mensaje,Simbolo probSimbolos[])
@@ -79,8 +82,8 @@ public class GenerarHuffman {
 			pila.push(nodo);
 		}
 		ordenarPila(pila);
-		int tamaño=pila.size();
-		while(tamaño>1)
+		int tamaÃ±o=pila.size();
+		while(tamaÃ±o>1)
 		{
 			Nodo nodo1,nodo2;
 			nodo1=pila.pop();
@@ -90,7 +93,7 @@ public class GenerarHuffman {
 			nodoNuevo.der = nodo2;
 			pila.push(nodoNuevo);
 			ordenarPila(pila);
-			tamaño=pila.size();
+			tamaÃ±o=pila.size();
 		}
 		ArrayList<Codificacion> codificacion = new ArrayList<Codificacion>();
 		generarCodigosArbol(pila.pop(), "",codificacion);
@@ -100,10 +103,10 @@ public class GenerarHuffman {
 	
 	public String comprimirHuffman(ArrayList<Codificacion> codificacion,String texto)
 	{
-		int tamañoTexto = texto.length();
+		int tamaÃ±oTexto = texto.length();
 		String mensajeComprimido="";
 		Iterator<Codificacion> iterator;
-		for(int i=0;i<tamañoTexto;i++)
+		for(int i=0;i<tamaÃ±oTexto;i++)
 		{
 			iterator = codificacion.iterator();
 			while(iterator.hasNext())
@@ -121,14 +124,14 @@ public class GenerarHuffman {
 	private Stack<Nodo> ordenarPila(Stack<Nodo> pila)
 	{
 		Stack<Nodo> nuevaPila = new Stack<Nodo>();
-		int tamaño = pila.size();
-		Nodo[] nodos = new Nodo[tamaño];
-		for(int i=0;i<tamaño;i++)
+		int tamaÃ±o = pila.size();
+		Nodo[] nodos = new Nodo[tamaÃ±o];
+		for(int i=0;i<tamaÃ±o;i++)
 		{
 			nodos[i]=pila.pop();
 		}
 		bubbleSort(nodos);
-		for(int i=tamaño-1;i>=0;i--)
+		for(int i=tamaÃ±o-1;i>=0;i--)
 		{
 			pila.push(nodos[i]);
 		}
@@ -160,6 +163,7 @@ public class GenerarHuffman {
 			{
 				Codificacion aux = new Codificacion();
 				aux.codigo=codigo;aux.probabilidad=nodo.valor.probabilidad;aux.simbolo=nodo.valor.simbolo.charAt(0);
+				//System.out.println("caracter: "+aux.simbolo+" codigo: "+aux.codigo);
 				codificacion.add(aux);
 				
 			}

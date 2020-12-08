@@ -32,7 +32,7 @@ public class Compresor {
 		int i = 0;
 		int cantidadTotalSimbolos = 0;
     	String simboloActual;
-    	textoSeleccionado = textoSeleccionado.replaceAll("\\r\\n", "");
+    	textoSeleccionado = textoSeleccionado.replaceAll("\\r", "");
     	while(i < textoSeleccionado.length()) {
     		simboloActual = String.valueOf(textoSeleccionado.charAt(i));
             if(hashmapCants.containsKey(simboloActual)){
@@ -92,7 +92,7 @@ public class Compresor {
 		String retorno = "";
 		GenerarRLC generador = new GenerarRLC();
 		retorno = generador.generarRLC(this.getTextoSeleccionado());
-		System.out.println("test "+nombreArchivoSeleccionado);
+		//System.out.println("test "+nombreArchivoSeleccionado);
 		gestorArchs.get_instancia().nuevoArchivo("RLC");
 		gestorArchs.get_instancia().actualizarArchivo("RLC.txt", retorno);
 		double lengthOriginal = getTextoSeleccionado().length();
