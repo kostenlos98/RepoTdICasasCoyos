@@ -18,6 +18,8 @@ public class Compresor {
 	private String textoSeleccionado;
 	private String nombreArchivoSeleccionado;
 	private Simbolo[] probabilidadesTextoSeleccionado;
+	public double redudanciaSF;
+	public double compresionSF;
 	
 	
 	public Compresor() {
@@ -32,7 +34,7 @@ public class Compresor {
 		int cantidadTotalSimbolos = 0;
     	String simboloActual;
     	textoSeleccionado = textoSeleccionado.replaceAll("\\r", "");
-    	while(i < textoSeleccionado.length()) {
+    	while(i < textoSeleccionado.length()-1) {
     		simboloActual = String.valueOf(textoSeleccionado.charAt(i));
             if(hashmapCants.containsKey(simboloActual)){
             	hashmapCants.put(simboloActual, hashmapCants.get(simboloActual)+1);
@@ -50,7 +52,7 @@ public class Compresor {
         for (Map.Entry<String, Integer> entry : hashmapCants.entrySet()) {
               prob_act = (double) entry.getValue() / cantidadTotalSimbolos;
               simboloAct = new Simbolo(prob_act, entry.getKey());
-              System.out.println("simbolo: "+simboloAct.simbolo+" prob: "+simboloAct.probabilidad);
+              //System.out.println("simbolo: "+simboloAct.simbolo+" prob: "+simboloAct.probabilidad);
               retorno.add(simboloAct);
         }
 		return retorno.toArray(new Simbolo[retorno.size()]);
@@ -71,7 +73,7 @@ public class Compresor {
 		String retorno = "";
 		GenerarHuffman generador = new GenerarHuffman();
 		retorno = generador.textoComprimido(textoSeleccionado, probabilidadesTextoSeleccionado);
-		String nombreArch = "RLC-"+ this.nombreArchivoSeleccionado;
+		String nombreArch = "HF-"+ this.nombreArchivoSeleccionado;
 		nombreArch = nombreArch.substring(0, nombreArch.lastIndexOf('.'));
 		GestorArchs.get_instancia().nuevoArchivo(nombreArch);
 		GestorArchs.get_instancia().actualizarArchivo(nombreArch+ ".txt", retorno);
@@ -80,8 +82,8 @@ public class Compresor {
 	
 	
 
-	public double compresionSF() {
-        GenerarSF sf = new GenerarSF();
+	public void compresionSF() {
+        /*GenerarSF sf = new GenerarSF();
         sf.generarSF(probabilidadesTextoSeleccionado);
         HashMap<Character,String> tablaCod = sf.getTablaCod();
         String textoComp = sf.generarComprimido(this.nombreArchivoSeleccionado,tablaCod);
@@ -90,6 +92,15 @@ public class Compresor {
 		GestorArchs.get_instancia().nuevoArchivo(nombreArch);
 		GestorArchs.get_instancia().actualizarArchivo(nombreArch+ ".txt", textoComp);
         return sf.tasaCompresion(this.textoSeleccionado, textoComp);
+        */
+		ComprimirShannon sf = new ComprimirShannon();
+		String textoComprimido = sf.generarMensaje(textoSeleccionado, probabilidadesTextoSeleccionado);
+		String nombreArch = "SF-"+ this.nombreArchivoSeleccionado;
+		nombreArch = nombreArch.substring(0, nombreArch.lastIndexOf('.'));
+		GestorArchs.get_instancia().nuevoArchivo(nombreArch);
+		GestorArchs.get_instancia().actualizarArchivo(nombreArch+ ".txt", textoComprimido);
+		redudanciaSF = sf.getRedundancia();
+		compresionSF=sf.getTasaCompresion();
 	}
 
 	
