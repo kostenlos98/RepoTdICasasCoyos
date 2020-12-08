@@ -26,5 +26,10 @@ public class GenerarRLC {
 		textoComprimido+= k+""+ant+"";
 		return textoComprimido;
 	}
+	
+	public double tasaCompresion(String textoOriginal,String textoComprimido)
+	{
+		return textoOriginal.length()/textoComprimido.length();
+	}
 
 }

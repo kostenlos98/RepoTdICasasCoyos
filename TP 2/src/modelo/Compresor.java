@@ -32,6 +32,7 @@ public class Compresor {
 		int i = 0;
 		int cantidadTotalSimbolos = 0;
     	String simboloActual;
+    	textoSeleccionado = textoSeleccionado.replaceAll("\\r\\n", "");
     	while(i < textoSeleccionado.length()) {
     		simboloActual = String.valueOf(textoSeleccionado.charAt(i));
             if(hashmapCants.containsKey(simboloActual)){
@@ -50,6 +51,7 @@ public class Compresor {
         for (Map.Entry<String, Integer> entry : hashmapCants.entrySet()) {
               prob_act = (double) entry.getValue() / cantidadTotalSimbolos;
               simboloAct = new Simbolo(prob_act, entry.getKey());
+              System.out.println("simbolo: "+simboloAct.simbolo+" prob: "+simboloAct.probabilidad);
               retorno.add(simboloAct);
         }
 		return retorno.toArray(new Simbolo[retorno.size()]);
@@ -70,7 +72,8 @@ public class Compresor {
 		String retorno = "";
 		GenerarHuffman generador = new GenerarHuffman();
 		retorno = generador.textoComprimido(textoSeleccionado, probabilidadesTextoSeleccionado);
-		gestorArchs.actualizarArchivo(nombreArchivoSeleccionado+"-HUFFMAN", retorno);
+		gestorArchs.get_instancia().nuevoArchivo("HUFFMAN");
+		gestorArchs.get_instancia().actualizarArchivo("HUFFMAN.txt", retorno);
 		return generador.tasaCompresion(this.textoSeleccionado, retorno);
 	}
 	
@@ -85,11 +88,17 @@ public class Compresor {
 	*/
 	
 	
-	public void compresionRLC() {
+	public double compresionRLC() {
 		String retorno = "";
 		GenerarRLC generador = new GenerarRLC();
 		retorno = generador.generarRLC(this.getTextoSeleccionado());
-		gestorArchs.actualizarArchivo(nombreArchivoSeleccionado+"-RLC", retorno);
+		System.out.println("test "+nombreArchivoSeleccionado);
+		gestorArchs.get_instancia().nuevoArchivo("RLC");
+		gestorArchs.get_instancia().actualizarArchivo("RLC.txt", retorno);
+		double lengthOriginal = getTextoSeleccionado().length();
+		double lengthComprimido = retorno.length();
+		double TC = lengthOriginal/lengthComprimido;
+		return TC;
 	}
 	
 	
@@ -127,7 +136,7 @@ public class Compresor {
 
 	public void cargarTextoSeleccionado() throws FileNotFoundException {
 		this.setTextoSeleccionado(this.gestorArchs.get_instancia().getTextoArch(nombreArchivoSeleccionado));
-		this.setProbabilidadesTextoSeleccionado(this.probabilidadesTextoSeleccionado);
+		this.setProbabilidadesTextoSeleccionado(calcularProbabilidadesTexto());
 	}
 
 	
