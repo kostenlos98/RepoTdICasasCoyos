@@ -35,13 +35,13 @@ public class ControladorCompresor implements ActionListener{
         		compresor.setNombreArchivoSeleccionado(vista.getNombreSeleccionado());
         		compresor.cargarTextoSeleccionado();
         		double TC_H = compresor.compresionHuffman();
-        		//compresor.compresionSF();
+        		double TC_SF = compresor.compresionSF();
         		double TC_RLC = compresor.compresionRLC();
         		StringBuilder resultado = new StringBuilder();
         		resultado.append("*** ARCHIVOS GENERADOS EN CARPETA ORIGEN ***\n");
         		resultado.append("*** Tasas de compresion ***" + '\n');
         		resultado.append("TC RLC: "+ +TC_RLC+'\n');
-        		resultado.append("TC SF: "+ '\n');
+        		resultado.append("TC SF: "+ TC_SF +'\n');
         		resultado.append("TC Huffman: "+ TC_H + '\n');
         		resultado.append("*** Redundancias y rendimientos  ***" + '\n');
         		

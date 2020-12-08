@@ -15,7 +15,6 @@ import java.util.Map;
 import modelo.GenerarHuffman.Codificacion;
 
 public class Compresor {
-	private GestorArchs gestorArchs;
 	private String textoSeleccionado;
 	private String nombreArchivoSeleccionado;
 	private Simbolo[] probabilidadesTextoSeleccionado;
@@ -72,20 +71,27 @@ public class Compresor {
 		String retorno = "";
 		GenerarHuffman generador = new GenerarHuffman();
 		retorno = generador.textoComprimido(textoSeleccionado, probabilidadesTextoSeleccionado);
-		gestorArchs.get_instancia().nuevoArchivo("HUFFMAN");
-		gestorArchs.get_instancia().actualizarArchivo("HUFFMAN.txt", retorno);
+		String nombreArch = "RLC-"+ this.nombreArchivoSeleccionado;
+		nombreArch = nombreArch.substring(0, nombreArch.lastIndexOf('.'));
+		GestorArchs.get_instancia().nuevoArchivo(nombreArch);
+		GestorArchs.get_instancia().actualizarArchivo(nombreArch+ ".txt", retorno);
 		return generador.tasaCompresion(this.textoSeleccionado, retorno);
 	}
 	
 	
-	/*
-	public void compresionSF() {
+
+	public double compresionSF() {
         GenerarSF sf = new GenerarSF();
         sf.generarSF(probabilidadesTextoSeleccionado);
         HashMap<Character,String> tablaCod = sf.getTablaCod();
-        this.generarComprimido(this.nombreArchivoSeleccionado,tablaCod);
+        String textoComp = sf.generarComprimido(this.nombreArchivoSeleccionado,tablaCod);
+		String nombreArch = "SF-"+ this.nombreArchivoSeleccionado;
+		nombreArch = nombreArch.substring(0, nombreArch.lastIndexOf('.'));
+		GestorArchs.get_instancia().nuevoArchivo(nombreArch);
+		GestorArchs.get_instancia().actualizarArchivo(nombreArch+ ".txt", textoComp);
+        return sf.tasaCompresion(this.textoSeleccionado, textoComp);
 	}
-	*/
+
 	
 	
 	public double compresionRLC() {
@@ -93,55 +99,22 @@ public class Compresor {
 		GenerarRLC generador = new GenerarRLC();
 		retorno = generador.generarRLC(this.getTextoSeleccionado());
 		//System.out.println("test "+nombreArchivoSeleccionado);
-		gestorArchs.get_instancia().nuevoArchivo("RLC");
-		gestorArchs.get_instancia().actualizarArchivo("RLC.txt", retorno);
+		String nombreArch = "RLC-"+ this.nombreArchivoSeleccionado;
+		nombreArch = nombreArch.substring(0, nombreArch.lastIndexOf('.'));
+		GestorArchs.get_instancia().nuevoArchivo(nombreArch);
+		GestorArchs.get_instancia().actualizarArchivo(nombreArch + ".txt", retorno);
 		double lengthOriginal = getTextoSeleccionado().length();
 		double lengthComprimido = retorno.length();
 		double TC = lengthOriginal/lengthComprimido;
 		return TC;
 	}
 	
-	
-    private void generarComprimido(String nombreArch, HashMap<Character,String> tablaCod)
-    {
-        BitOutputStream bos;
-        BufferedReader lector;
-        String linea = null;
-        int i;
-        bos = new BitOutputStream();
-        try
-        {
-            lector = new BufferedReader(new InputStreamReader(new FileInputStream(new File(".\\datos\\" + nombreArch)),"UTF8"));
-            linea = lector.readLine();
-            while (linea != null)
-            {
-                for (i = 0; i < linea.length(); i++)
-                    bos.grabarBits(tablaCod.get(linea.charAt(i)));
-                bos.grabarBits(tablaCod.get('\n'));
-                linea = lector.readLine();   
-            }
-            bos.grabarBits(tablaCod.get((char)3)); /* codifica como ultimo char al ETX */
-            lector.close();
-            bos.cerrar();
-            FileOutputStream output = new FileOutputStream(new File(".\\datos\\" + nombreArch +"-RLC"),true);
-            output.write(bos.getCodificacion());
-            output.close();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-    }
-	
 
 	public void cargarTextoSeleccionado() throws FileNotFoundException {
-		this.setTextoSeleccionado(this.gestorArchs.get_instancia().getTextoArch(nombreArchivoSeleccionado));
+		this.setTextoSeleccionado(GestorArchs.get_instancia().getTextoArch(nombreArchivoSeleccionado));
 		this.setProbabilidadesTextoSeleccionado(calcularProbabilidadesTexto());
 	}
 
-	
-	
-	
 	
 	public Simbolo[] getProbabilidadesTextoSeleccionado() {
 		return probabilidadesTextoSeleccionado;
@@ -172,10 +145,5 @@ public class Compresor {
 		this.nombreArchivoSeleccionado = nombreArchivoSeleccionado;
 	}
 
-
-	public GestorArchs getGestorArchs() {
-		return gestorArchs;
-	}
-	
 	
 }

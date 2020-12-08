@@ -1,5 +1,7 @@
 package modelo;
 
+import java.nio.charset.StandardCharsets;
+
 public class BitOutputStream {
     private byte buffer;
     private int ocupado; 
@@ -56,5 +58,10 @@ public class BitOutputStream {
 
     public byte[] getCodificacion() {
         return codificacion;
+    }
+    
+    public String getStringCod() {
+    	 String s = new String(this.getCodificacion(), StandardCharsets.UTF_8);
+    	 return s;
     }
 }

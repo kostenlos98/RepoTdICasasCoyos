@@ -1,9 +1,19 @@
 package modelo;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Map.Entry;
+
+import modelo.GenerarHuffman.Codificacion;
+
 import java.util.PriorityQueue;
 
 public class GenerarSF {
@@ -14,13 +24,22 @@ public class GenerarSF {
         super();
     }
     
-    public void generarSF(ArrayList<Simbolo> tablaArray)
+	public double tasaCompresion(String mensajeOriginal,String mensajeComprimido)
+	{
+		double longitudOriginal = mensajeOriginal.length()*8;
+		double longitudComprimido = mensajeComprimido.length();
+		double TC=longitudOriginal/longitudComprimido;
+		return TC;
+	}
+	
+	
+    public void generarSF(Simbolo[] tablaArray)
     {
-        
         HashMap<Character,Double> tabla = new HashMap<Character,Double>();
-        Iterator<Simbolo> it = tablaArray.iterator();
-        while(it.hasNext()) {
-        	tabla.put(it.next().simbolo.charAt(0), it.next().probabilidad);
+        int i = 0;
+        while(i < tablaArray.length) {
+        	tabla.put(tablaArray[i].simbolo.charAt(0), tablaArray[i].probabilidad);
+        	i++;
         }
         PriorityQueue<NodoShannonFano> tablaProb = new PriorityQueue<NodoShannonFano>(tabla.size(),new ComparadorSF());
         
@@ -91,9 +110,32 @@ public class GenerarSF {
             }
         }
     }
-
+    
+    public String generarComprimido(String texto, HashMap<Character,String> tablaCod)
+    {
+		int tamañoTexto = texto.length();
+		String mensajeComprimido="";
+		Iterator it;
+		for(int i=0;i<tamañoTexto;i++)
+		{
+			it = tablaCod.entrySet().iterator();
+			while(it.hasNext())
+			{
+				Map.Entry pair = (Map.Entry)it.next();
+				if(((Character) texto.charAt(i)) == ((Character) pair.getKey()))
+				{
+					mensajeComprimido+= pair.getValue();
+				}
+			}
+		}
+		return mensajeComprimido;
+    }
+	
+    
     public HashMap<Character, String> getTablaCod()
     {
         return tablaCod;
     }
+
+	
 }
