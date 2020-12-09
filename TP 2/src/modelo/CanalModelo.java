@@ -28,7 +28,11 @@ public class CanalModelo {
 		{
 			for(int j=0;j<M;j++)
 			{
-				probPoste[i][j]=(matrizCanal[i][j]*probPriori[i])/probSalida[j];
+				if(probSalida[j]!=0)
+				{
+					probPoste[i][j]=(matrizCanal[i][j]*probPriori[i])/probSalida[j];
+				}
+				
 			}
 		}
 		return probPoste;

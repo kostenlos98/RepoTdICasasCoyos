@@ -57,7 +57,7 @@ public class ControladorCanales implements ActionListener{
     		double entropiaPriori = canal.entropiaPriori(probPriori, N);
     		double equivocacion = canal.equivocacionCanal(probSalida, entropiaPoste);
     		double infoMutua = canal.informacionMutua(equivocacion, entropiaPriori);
-    		double entropiaSalida = canal.entropiaSalida(probSalida, N);
+    		double entropiaSalida = canal.entropiaSalida(probSalida, M);
     		
     		
     				
