@@ -52,18 +52,12 @@ public class Compresor {
         for (Map.Entry<String, Integer> entry : hashmapCants.entrySet()) {
               prob_act = (double) entry.getValue() / cantidadTotalSimbolos;
               simboloAct = new Simbolo(prob_act, entry.getKey());
-              //System.out.println("simbolo: "+simboloAct.simbolo+" prob: "+simboloAct.probabilidad);
               retorno.add(simboloAct);
         }
 		return retorno.toArray(new Simbolo[retorno.size()]);
 	}
 	
-	/*
-	public double redundanciaSF() {
-		GenerarRLC generador = new GenerarRLC();	
-	}
-	*/
-	
+
 	public double redundanciaH() {
 		GenerarHuffman generador = new GenerarHuffman();
 		return generador.redundancia(probabilidadesTextoSeleccionado);
@@ -83,16 +77,6 @@ public class Compresor {
 	
 
 	public void compresionSF() {
-        /*GenerarSF sf = new GenerarSF();
-        sf.generarSF(probabilidadesTextoSeleccionado);
-        HashMap<Character,String> tablaCod = sf.getTablaCod();
-        String textoComp = sf.generarComprimido(this.nombreArchivoSeleccionado,tablaCod);
-		String nombreArch = "SF-"+ this.nombreArchivoSeleccionado;
-		nombreArch = nombreArch.substring(0, nombreArch.lastIndexOf('.'));
-		GestorArchs.get_instancia().nuevoArchivo(nombreArch);
-		GestorArchs.get_instancia().actualizarArchivo(nombreArch+ ".txt", textoComp);
-        return sf.tasaCompresion(this.textoSeleccionado, textoComp);
-        */
 		ComprimirShannon sf = new ComprimirShannon();
 		String textoComprimido = sf.generarMensaje(textoSeleccionado, probabilidadesTextoSeleccionado);
 		String nombreArch = "SF-"+ this.nombreArchivoSeleccionado;
@@ -109,7 +93,6 @@ public class Compresor {
 		String retorno = "";
 		GenerarRLC generador = new GenerarRLC();
 		retorno = generador.generarRLC(this.getTextoSeleccionado());
-		//System.out.println("test "+nombreArchivoSeleccionado);
 		String nombreArch = "RLC-"+ this.nombreArchivoSeleccionado;
 		nombreArch = nombreArch.substring(0, nombreArch.lastIndexOf('.'));
 		GestorArchs.get_instancia().nuevoArchivo(nombreArch);

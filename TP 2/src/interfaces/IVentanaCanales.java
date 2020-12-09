@@ -11,5 +11,7 @@ public interface IVentanaCanales {
 	JTextArea getTextAreaResultados();
 	JTextArea getTextAreaProbs();
 	JTextArea getTextAreaMatrizCanal();
+	JTextArea getTextAreaN();
+	JTextArea getTextAreaM();
 	void lanzarCartelError(String err);
 }

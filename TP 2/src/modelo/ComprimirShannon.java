@@ -24,10 +24,6 @@ public class ComprimirShannon {
 		}
 		HashMap<Character, String> codigo = comprimirShannon(freq);
 		
-		for(Entry<Character, String> entry:codigo.entrySet())
-		{
-			//System.out.println(entry.getKey()+" "+entry.getValue());
-		}
 		String mensajeComprimido = comprimirMensaje(codigo, mensaje);
 		calculos(codigo, freq, mensaje, mensajeComprimido);
 		return mensajeComprimido;

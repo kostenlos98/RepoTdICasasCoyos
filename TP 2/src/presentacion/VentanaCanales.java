@@ -43,8 +43,10 @@ public class VentanaCanales implements IVentanaCanales {
 	private JFrame frame;
 	private JTextArea textAreaProbs = new JTextArea();
 	private JTextArea textAreaMatrizCanal = new JTextArea();
-	private JButton btnSimular = new JButton("SIMULAR");
+	private JButton btnSimular = new JButton("CALCULAR");
 	private JTextArea textAreaResultados = new JTextArea();
+	private JTextArea textAreaN = new JTextArea();
+	private JTextArea textAreaM = new JTextArea();
 	private DefaultListModel<String> listaModeloArchivos = new DefaultListModel<String>();
 	
 	/**
@@ -59,20 +61,36 @@ public class VentanaCanales implements IVentanaCanales {
 		txtpnMatrizDelCanal.setForeground(Color.WHITE);
 		txtpnMatrizDelCanal.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		txtpnMatrizDelCanal.setBackground(Color.BLACK);
-		txtpnMatrizDelCanal.setBounds(291, 96, 203, 19);
+		txtpnMatrizDelCanal.setBounds(236, 94, 203, 19);
 		frame.getContentPane().add(txtpnMatrizDelCanal);
-		
-		
-		textAreaProbs.setEditable(false);
 		textAreaProbs.setBackground(Color.WHITE);
 		textAreaProbs.setBounds(23, 123, 189, 91);
 		frame.getContentPane().add(textAreaProbs);
-		
-		
-		textAreaMatrizCanal.setEditable(false);
 		textAreaMatrizCanal.setBackground(Color.WHITE);
-		textAreaMatrizCanal.setBounds(291, 125, 189, 91);
+		textAreaMatrizCanal.setBounds(236, 123, 189, 91);
 		frame.getContentPane().add(textAreaMatrizCanal);
+		
+		JTextPane txtpnN = new JTextPane();
+		txtpnN.setText("N");
+		txtpnN.setForeground(Color.WHITE);
+		txtpnN.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtpnN.setBackground(Color.BLACK);
+		txtpnN.setBounds(446, 129, 23, 19);
+		frame.getContentPane().add(txtpnN);
+		
+		JTextPane txtpnM = new JTextPane();
+		txtpnM.setText("M");
+		txtpnM.setForeground(Color.WHITE);
+		txtpnM.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtpnM.setBackground(Color.BLACK);
+		txtpnM.setBounds(446, 169, 23, 19);
+		frame.getContentPane().add(txtpnM);
+		textAreaN.setBackground(Color.WHITE);
+		textAreaN.setBounds(468, 129, 48, 30);
+		frame.getContentPane().add(textAreaN);
+		textAreaM.setBackground(Color.WHITE);
+		textAreaM.setBounds(468, 169, 48, 30);
+		frame.getContentPane().add(textAreaM);
 		frame.getRootPane().setWindowDecorationStyle(JRootPane.NONE); 
 	}
 
@@ -97,7 +115,7 @@ public class VentanaCanales implements IVentanaCanales {
 		txtpnTitulo.setBackground(Color.BLUE);
 		txtpnTitulo.setEditable(false);
 		txtpnTitulo.setFont(new Font("Nirmala UI", Font.BOLD, 18));
-		txtpnTitulo.setText("SIMULADOR DE CANALES DE COMUNICACION");
+		txtpnTitulo.setText("CANALES DE COMUNICACION");
 		txtpnTitulo.setBounds(10, 10, 425, 39);
 		panel.add(txtpnTitulo);
 		
@@ -161,6 +179,16 @@ public class VentanaCanales implements IVentanaCanales {
 	public JTextArea getTextAreaMatrizCanal() {
 		return textAreaMatrizCanal;
 	}
+
+	public JTextArea getTextAreaN() {
+		return textAreaN;
+	}
+
+	public JTextArea getTextAreaM() {
+		return textAreaM;
+	}
+	
+	
 	
 	
 }

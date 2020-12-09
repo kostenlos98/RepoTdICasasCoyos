@@ -52,11 +52,60 @@ public class CanalModelo {
 		return entropiaPoste;
 	}
 	
-	public double equivocacionCanal(double entropiaPoste)
+	public double equivocacionCanal(double[] probSalida, double[] entropiaPoste)
 	{
 		double equivocacion=0;
-		
+		for(int i=0;i<probSalida.length;i++) {
+			equivocacion+= probSalida[i] * entropiaPoste[i];
+		}
 		return equivocacion;
 	}
+	
+	public double informacionMutua(double equivocacion, double entropiaPriori) {
+		double ret = 0;
+		return entropiaPriori - equivocacion;
+	}
+	
+	public double entropiaPriori(double[] probsPriori, int N) {
+		double entropiaPriori = 0;
+		for(int i=0;i<N;i++)
+		{
+			if(probsPriori[i]!=0)
+			{
+				entropiaPriori +=probsPriori[i]*Math.log(1/probsPriori[i])/Math.log(2);
+			}
+		}
+		return entropiaPriori;
+	}
+	
+	public double entropiaSalida(double[] probSalida, int N) {
+		double entropiaPriori = 0;
+		for(int i=0;i<N;i++)
+		{
+			if(probSalida[i]!=0)
+			{
+				entropiaPriori +=probSalida[i]*Math.log(1/probSalida[i])/Math.log(2);
+			}
+		}
+		return entropiaPriori;
+	}
+	
+	public double[][] getMatrizCanal() {
+		return matrizCanal;
+	}
 
+	public void setMatrizCanal(double[][] matrizCanal) {
+		this.matrizCanal = matrizCanal;
+	}
+
+	public double[] getProbPriori() {
+		return probPriori;
+	}
+
+	public void setProbPriori(double[] probPriori) {
+		this.probPriori = probPriori;
+	}
+
+	
+	
 }

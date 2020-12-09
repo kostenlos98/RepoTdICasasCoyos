@@ -163,7 +163,6 @@ public class GenerarHuffman {
 			{
 				Codificacion aux = new Codificacion();
 				aux.codigo=codigo;aux.probabilidad=nodo.valor.probabilidad;aux.simbolo=nodo.valor.simbolo.charAt(0);
-				//System.out.println("caracter: "+aux.simbolo+" codigo: "+aux.codigo);
 				codificacion.add(aux);
 				
 			}
