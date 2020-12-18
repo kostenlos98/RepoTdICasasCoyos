@@ -121,7 +121,7 @@ public class Compresor {
 	public String getProbabilidadesFormato() {
 		StringBuilder resultado = new StringBuilder();
 		Simbolo simbAct;
-		DecimalFormat numberFormat = new DecimalFormat("0.0000");
+		DecimalFormat numberFormat = new DecimalFormat("0.0000000");
 		
 		resultado.append("-------------------------------------"+'\n');
 		resultado.append("Simbolo     |    Probabilidad   "+'\n');
