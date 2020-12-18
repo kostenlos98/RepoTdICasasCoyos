@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -20,7 +21,8 @@ public class Compresor {
 	private Simbolo[] probabilidadesTextoSeleccionado;
 	public double redudanciaSF;
 	public double compresionSF;
-	
+	HashMap<Character, String> codigoAlfSF = new HashMap<Character, String>();
+	HashMap<Character, String> codigoAlfHF = new HashMap<Character, String>();
 	
 	public Compresor() {
 		super();
@@ -71,6 +73,7 @@ public class Compresor {
 		nombreArch = nombreArch.substring(0, nombreArch.lastIndexOf('.'));
 		GestorArchs.get_instancia().nuevoArchivo(nombreArch);
 		GestorArchs.get_instancia().actualizarArchivo(nombreArch+ ".txt", retorno);
+		this.codigoAlfHF = generador.getCodigoAlf();
 		return generador.tasaCompresion(this.textoSeleccionado, retorno);
 	}
 	
@@ -84,6 +87,7 @@ public class Compresor {
 		GestorArchs.get_instancia().nuevoArchivo(nombreArch);
 		GestorArchs.get_instancia().actualizarArchivo(nombreArch+ ".txt", textoComprimido);
 		redudanciaSF = sf.getRedundancia();
+		this.codigoAlfSF = sf.getCodigoAlf();
 		compresionSF=sf.getTasaCompresion();
 	}
 
@@ -113,13 +117,43 @@ public class Compresor {
 	public Simbolo[] getProbabilidadesTextoSeleccionado() {
 		return probabilidadesTextoSeleccionado;
 	}
-
+	
+	public String getProbabilidadesFormato() {
+		StringBuilder resultado = new StringBuilder();
+		Simbolo simbAct;
+		DecimalFormat numberFormat = new DecimalFormat("0.0000");
+		
+		resultado.append("-------------------------------------"+'\n');
+		resultado.append("Simbolo     |    Probabilidad   "+'\n');
+		resultado.append("-------------------------------------"+'\n');
+		for(int i=0;i < this.probabilidadesTextoSeleccionado.length ; i++) {
+			simbAct = this.probabilidadesTextoSeleccionado[i];
+			resultado.append(simbAct.simbolo + "    " + numberFormat.format(simbAct.probabilidad)+'\n'); //AGREGAR CASO CUANDO EL CHAR ES \n
+		}
+		resultado.append("-------------------------------------"+'\n');
+		return resultado.toString();
+	}
 
 	public void setProbabilidadesTextoSeleccionado(Simbolo[] probabilidadesTextoSeleccionado) {
 		this.probabilidadesTextoSeleccionado = probabilidadesTextoSeleccionado;
 	}
 
-
+	public String tablaCodAlfabeto(HashMap<Character, String> codigoAlfabeto) {
+		StringBuilder resultado = new StringBuilder();
+		Simbolo simbAct;
+		resultado.append("-------------------------------------"+'\n');
+		resultado.append("Codificaciones obtenidas             "+'\n');
+		resultado.append("-------------------------------------"+'\n');
+	    Iterator it = codigoAlfabeto.entrySet().iterator();
+	    while (it.hasNext()) {
+	        Map.Entry pair = (Map.Entry)it.next();
+	       	resultado.append(pair.getKey() + "    " + pair.getValue()+'\n');  //AGREGAR CASO CUANDO EL CHAR ES \n
+	        
+	    }
+		resultado.append("-------------------------------------"+'\n');
+		return resultado.toString();
+	}
+	
 	public String getTextoSeleccionado() {
 		return textoSeleccionado;
 	}
@@ -137,6 +171,16 @@ public class Compresor {
 
 	public void setNombreArchivoSeleccionado(String nombreArchivoSeleccionado) {
 		this.nombreArchivoSeleccionado = nombreArchivoSeleccionado;
+	}
+
+
+	public HashMap<Character, String> getCodigoAlfSF() {
+		return codigoAlfSF;
+	}
+
+
+	public HashMap<Character, String> getCodigoAlfHF() {
+		return codigoAlfHF;
 	}
 
 	

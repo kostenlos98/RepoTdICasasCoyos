@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import java.awt.Color;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -51,11 +52,14 @@ public class VentanaCompresor implements IVentanaCompresor {
 	public VentanaCompresor() {
 		initialize();
 		this.btnCalcular.setActionCommand("CALCULAR");
-		
 		listArchivos.setModel(listaModeloArchivos);
 		listArchivos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listArchivos.setBounds(23, 123, 392, 91);
 		frame.getContentPane().add(listArchivos);
+		
+		JScrollPane scrollPane = new JScrollPane(textAreaResultados);
+		scrollPane.setBounds(23, 278, 501, 225);
+		frame.getContentPane().add(scrollPane);
 		frame.getRootPane().setWindowDecorationStyle(JRootPane.NONE); 
 	}
 
@@ -104,7 +108,7 @@ public class VentanaCompresor implements IVentanaCompresor {
 		
 		
 		textAreaResultados.setBackground(new Color(255, 255, 255));
-		textAreaResultados.setBounds(23, 255, 483, 227);
+		textAreaResultados.setBounds(23, 278, 483, 227);
 		frame.getContentPane().add(textAreaResultados);
 		
 		btnCalcular.setActionCommand("CALCULAR");
@@ -167,5 +171,4 @@ public class VentanaCompresor implements IVentanaCompresor {
     public void lanzarCartelError(String err) {
         JOptionPane.showMessageDialog(null, err);
     }
-	
 }

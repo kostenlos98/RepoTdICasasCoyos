@@ -37,6 +37,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JScrollPane;
 
 public class VentanaCanales implements IVentanaCanales {
 
@@ -91,6 +92,10 @@ public class VentanaCanales implements IVentanaCanales {
 		textAreaM.setBackground(Color.WHITE);
 		textAreaM.setBounds(468, 169, 48, 30);
 		frame.getContentPane().add(textAreaM);
+		
+		JScrollPane scrollPane = new JScrollPane(textAreaResultados);
+		scrollPane.setBounds(23, 267, 499, 244);
+		frame.getContentPane().add(scrollPane);
 		frame.getRootPane().setWindowDecorationStyle(JRootPane.NONE); 
 	}
 
@@ -139,7 +144,7 @@ public class VentanaCanales implements IVentanaCanales {
 		
 		
 		textAreaResultados.setBackground(new Color(255, 255, 255));
-		textAreaResultados.setBounds(23, 283, 483, 223);
+		textAreaResultados.setBounds(505, 282, 483, 223);
 		frame.getContentPane().add(textAreaResultados);
 		
 		btnSimular.setActionCommand("CALCULAR");

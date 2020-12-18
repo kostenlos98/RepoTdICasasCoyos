@@ -1,10 +1,14 @@
 package modelo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Stack;
 
 public class GenerarHuffman {
+	
+	HashMap<Character, String> codigoAlf;
+	
 	
 	static class Nodo {    
 	    Simbolo valor; 
@@ -103,6 +107,7 @@ public class GenerarHuffman {
 	
 	public String comprimirHuffman(ArrayList<Codificacion> codificacion,String texto)
 	{
+		HashMap<Character, String> codigoAlf = new HashMap<Character, String>();
 		int tamañoTexto = texto.length();
 		String mensajeComprimido="";
 		Iterator<Codificacion> iterator;
@@ -112,12 +117,14 @@ public class GenerarHuffman {
 			while(iterator.hasNext())
 			{
 				Codificacion aux = iterator.next();
+				codigoAlf.put(aux.simbolo, aux.codigo);
 				if(texto.charAt(i)==aux.simbolo)
 				{
 					mensajeComprimido+= aux.codigo;
 				}
 			}
 		}
+		this.codigoAlf = codigoAlf;
 		return mensajeComprimido;
 	}
 	
@@ -172,6 +179,10 @@ public class GenerarHuffman {
 			}
 		}
 	}
-	
 
+	public HashMap<Character, String> getCodigoAlf() {
+		return codigoAlf;
+	}
+	
+	
 }

@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
@@ -32,17 +33,26 @@ public class ControladorCompresor implements ActionListener{
 		}
     	else {
         	try {
+        		
         		compresor.setNombreArchivoSeleccionado(vista.getNombreSeleccionado());
         		compresor.cargarTextoSeleccionado();
         		double TC_H = compresor.compresionHuffman();
-        		 compresor.compresionSF();
+        		compresor.compresionSF();
         		double TC_RLC = compresor.compresionRLC();
         		StringBuilder resultado = new StringBuilder();
         		resultado.append("*** ARCHIVOS GENERADOS EN CARPETA ORIGEN ***\n");
+        		resultado.append("*** Probabilidades de los simbolos ***" + '\n'); //DEBERIAN SER LAS FRECUENCIAS?
+        		resultado.append(compresor.getProbabilidadesFormato());
+        		resultado.append("*** Codigo alfabeto Shannon-Fano***" + '\n');
+        		resultado.append(compresor.tablaCodAlfabeto(compresor.getCodigoAlfSF()));
+        		resultado.append("*** Codigo alfabeto Huffman***" + '\n');
+        		resultado.append(compresor.tablaCodAlfabeto(compresor.getCodigoAlfHF()));
+        		resultado.append('\n');
         		resultado.append("*** Tasas de compresion ***" + '\n');
         		resultado.append("TC RLC: "+ +TC_RLC+'\n');
         		resultado.append("TC SF: "+ compresor.compresionSF +'\n');
         		resultado.append("TC Huffman: "+ TC_H + '\n');
+        		resultado.append('\n');
         		resultado.append("*** Redundancias y rendimientos  ***" + '\n');
         		
            		resultado.append("Redundancia SF: "+ compresor.redudanciaSF+'\n');

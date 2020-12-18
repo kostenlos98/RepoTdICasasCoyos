@@ -13,6 +13,7 @@ public class ComprimirShannon {
 	LinkedHashMap<Character, Double> freq;
 	double redundancia;
 	double tasaCompresion;
+	HashMap<Character, String> codigoAlf = new HashMap<Character, String>();
 	
 	public String generarMensaje(String mensaje, Simbolo probSimbolos[]) {
 		LinkedHashMap<Character, Double> freq = new LinkedHashMap<>();
@@ -23,6 +24,7 @@ public class ComprimirShannon {
 			
 		}
 		HashMap<Character, String> codigo = comprimirShannon(freq);
+		codigoAlf = codigo;
 		
 		String mensajeComprimido = comprimirMensaje(codigo, mensaje);
 		calculos(codigo, freq, mensaje, mensajeComprimido);
@@ -158,5 +160,11 @@ public class ComprimirShannon {
 	public double getTasaCompresion() {
 		return tasaCompresion;
 	}
+
+	public HashMap<Character, String> getCodigoAlf() {
+		return codigoAlf;
+	}
+	
+	
 }
 

@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
@@ -52,20 +53,42 @@ public class ControladorCanales implements ActionListener{
 			}
     		
     		double[] probSalida = canal.calcularProbSalida(matrizCanal, probPriori, N, M);
-    		double[][] probPoste = canal.calcularProbPoste(matrizCanal, probPriori, probSalida, N, M);
+    		double[][] probPoste  = canal.calcularProbPoste(matrizCanal, probPriori, probSalida, N, M);
     		double[] entropiaPoste = canal.entropiaPoste(probPoste, N, M) ;
     		double entropiaPriori = canal.entropiaPriori(probPriori, N);
     		double equivocacion = canal.equivocacionCanal(probSalida, entropiaPoste);
     		double infoMutua = canal.informacionMutua(equivocacion, entropiaPriori);
     		double entropiaSalida = canal.entropiaSalida(probSalida, M);
-    		
-    		
-    				
+    		DecimalFormat numberFormat = new DecimalFormat("0.0000");
+		
+    		resultado.append("*** Calculos intermedios ***" + '\n');
+    		resultado.append("Probabilidades de salida" + '\n');
+    		resultado.append(Arrays.toString(probSalida));
+    		resultado.append('\n');
+    		resultado.append('\n');
+    		resultado.append("Probabilidades a posteriori" + '\n');
+    		resultado.append(Arrays.deepToString(probPoste));
+    		resultado.append('\n');
+    		resultado.append('\n');
+    		resultado.append("Entropia a posteriori" + '\n');
+    		resultado.append(Arrays.toString(entropiaPoste));
+    		resultado.append('\n');
+    		resultado.append('\n');
+    		resultado.append("Entropia a priori" + '\n');
+    		resultado.append(numberFormat.format(entropiaPriori));
+    		resultado.append('\n');
+    		resultado.append('\n');
+    		resultado.append("Entropia salida" + '\n');
+    		resultado.append(numberFormat.format(entropiaSalida));
+    		resultado.append('\n');
+    		resultado.append('\n');
     		resultado.append("*** Equivocacion ***" + '\n');
-    		resultado.append("H(A/B) = " + equivocacion);
+    		resultado.append("H(A/B) = " + numberFormat.format(equivocacion));
+    		resultado.append('\n');
     		resultado.append('\n');
     		resultado.append("*** Informacion mutua ***" + '\n');
-    		resultado.append("I(A,B) = " + infoMutua + '\n');
+    		resultado.append("I(A,B) = " + numberFormat.format(infoMutua) + '\n');
+    		resultado.append('\n');
     		resultado.append('\n');
     		resultado.append("*** Propiedades de la informacion mutua ***" + '\n');
     		if (infoMutua == 0) {
@@ -74,7 +97,7 @@ public class ControladorCanales implements ActionListener{
     		else {
     			resultado.append("I(A,B) > 0 ya que los símbolos de entrada y salida son estadisticamente dependientes" + '\n');
     		}
-    		resultado.append("H(A,B)=H(A)+H(B)-I(A,B) = "+ (entropiaPriori + entropiaSalida - infoMutua) + '\n');
+    		resultado.append("H(A,B)=H(A)+H(B)-I(A,B) = "+ numberFormat.format((entropiaPriori + entropiaSalida - infoMutua) + '\n'));
     		
     		vista.getTextAreaResultados().setText(resultado.toString());
     		
